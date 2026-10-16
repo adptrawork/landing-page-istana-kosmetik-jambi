@@ -1,63 +1,30 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { business, products, waLink } from '../data/business';
-const badges = ['Semua', ...Array.from(new Set(products.map((p) => p.badge)))];
 ---
-<BaseLayout title={`Katalog — ${business.title}`} description={`Katalog lengkap ${business.name}: ${products.length} produk dengan tombol pesan WA per item.`} canonicalPath="/katalog" image={business.ogImage}>
+<BaseLayout title={`Katalog — ${business.title}`} description={`Katalog grosir ${business.name}: ${products.length} kosmetik, badge grosir vs ecer, slider gambar, pricelist WA.`} canonicalPath="/katalog" image={business.ogImage}>
   <section class="max-w-7xl mx-auto px-4 py-12 w-full min-h-[70dvh]">
-    <p class="text-sm font-medium text-rose-700">Katalog</p>
-    <h1 class="mt-2 text-3xl md:text-5xl tracking-tighter leading-none font-bold max-w-[20ch]">Semua Produk {business.name}</h1>
-    <p class="mt-3 text-base text-gray-600 leading-relaxed max-w-[65ch]">Filter berdasar label: Terverifikasi = identitas produk dicek dari sumber resmi; Estimasi = harga/foto perkiraan; Info menyusul = data belum ada. Harga dapat berubah, konfirmasi via WA toko.</p>
-    <div class="mt-6 flex flex-wrap gap-2" role="group" aria-label="Filter label produk">
-      {badges.map((b, i) => (
-        <button data-filter={b} class:list={["filter-btn border px-5 py-2.5 rounded-full text-sm font-medium transition-all", i === 0 ? "bg-zinc-950 text-white border-zinc-950" : "border-zinc-300 hover:border-zinc-950"]}>{b}</button>
-      ))}
+    <div class="md:pl-[10vw]">
+      <p class="text-sm font-bold uppercase tracking-widest text-amber-700 reveal">Katalog Grosir</p>
+      <h1 class="mt-2 text-4xl md:text-6xl tracking-tighter leading-none font-extrabold max-w-[20ch] reveal d-1">Semua Produk {business.name}</h1>
+      <p class="mt-3 text-base text-gray-600 leading-relaxed max-w-[65ch]">Badge <strong>Grosir ready</strong> = bisa kulakan lusinan • <strong>Ecer</strong> = satuan. Arahkan kursor pada strip untuk memperbesar, klik pesan untuk pricelist.</p>
     </div>
-    <p id="filter-count" class="mt-4 text-sm text-zinc-500" aria-live="polite"></p>
-    <div id="grid" class="mt-6 grid grid-cols-1 md:grid-cols-2 gap-6">
+    <div class="acc-strip mt-8 h-[52dvh] md:h-[64dvh]" role="list" aria-label="Slider seluruh produk">
       {products.map((p, i) => (
-        <article class:list={["prod", i % 2 === 1 && "md:mt-10"]} data-badge={p.badge}>
-          <div class="bg-white border border-slate-200/50 rounded-[2.5rem] p-6 shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] transition-all duration-300 hover:-translate-y-1">
-            <div class="rounded-3xl overflow-hidden bg-zinc-100 aspect-[4/3]">
-              <img src={p.image} alt={p.alt} width={p.w} height={p.h} loading="lazy" class="w-full h-full object-cover" />
-            </div>
-            <p class="mt-4 text-xs font-medium text-rose-700">{p.badge} • {p.stock}</p>
-            <h2 class="mt-1 font-semibold text-lg tracking-tight">{p.name}</h2>
-            <p class="mt-1 text-xs text-zinc-400">{p.source}</p>
+        <div class="acc-panel relative bg-zinc-100 border border-slate-200/50 reveal" role="listitem" tabindex="0" aria-label={p.name} style={`animation-delay:${(i % 4) * 0.06}s`}>
+          <img src={p.image} alt={p.alt} width={p.w} height={p.h} loading="lazy" class="absolute inset-0 w-full h-full object-cover" />
+          <span class:list={["absolute top-3 left-3 text-[11px] font-bold px-3 py-1.5 rounded-full", p.badge === 'Teruji' ? "bg-amber-700 text-white" : "bg-white/90 text-zinc-900"]}>{p.badge === 'Teruji' ? 'Grosir ready' : 'Ecer'}</span>
+          <div class="acc-label absolute bottom-0 inset-x-0 p-4 bg-gradient-to-t from-zinc-950/85 to-transparent text-white">
+            <p class="font-bold tracking-tight text-sm">{p.name}</p>
+            <p class="text-sm text-zinc-300">{p.price} • {p.stock}</p>
+            <a href={waLink(`Halo ${business.name}, saya mau pesan ${p.name} (${p.price}). Grosir/ecer ready?`)} class="mt-2 inline-block bg-white text-zinc-950 px-5 py-2 rounded-full text-sm font-medium active:scale-[0.98]">Pesan via WA</a>
           </div>
-          <div class="mt-3 flex items-center justify-between px-2 gap-2">
-            <p class="font-mono-num font-semibold text-sm">{p.price}</p>
-            <a href={waLink(`Halo ${business.name}, saya mau pesan ${p.name} (${p.price}). Apakah ready?`)} class="bg-zinc-950 text-white px-5 py-2.5 rounded-full text-sm font-medium transition-all duration-300 hover:-translate-y-0.5 active:scale-[0.98]">Pesan via WA</a>
-          </div>
-        </article>
+        </div>
       ))}
     </div>
-    <p class="mt-8 text-sm text-zinc-500">Belum menemukan yang dicari? <a class="underline underline-offset-4 text-zinc-900" href={waLink(`Halo ${business.name}, saya cari produk lain. Boleh info katalog lengkap?`)}>Tanya katalog lengkap via WA</a></p>
+    <div class="mt-8 grid grid-cols-1 md:grid-cols-12 gap-4 text-sm">
+      <div class="md:col-span-7 bg-amber-50 border border-amber-900/15 rounded-[2rem] p-6"><p class="font-bold">Butuh kulakan?</p><p class="mt-1 text-base text-gray-600 max-w-[65ch]">Minta pricelist grosir lusinan ke admin online sebelum datang.</p><a href={waLink(`Halo ${business.name}, saya mau minta pricelist grosir lengkap.`)} class="mt-3 inline-block bg-amber-700 text-white px-6 py-3 rounded-full font-medium active:scale-[0.98]">Minta Pricelist</a></div>
+      <div class="md:col-span-5 bg-white border border-slate-200/50 rounded-[2rem] p-6"><p class="font-bold">Cari satuan?</p><p class="mt-1 text-base text-gray-600">Semua item ecer bisa dipesan satuan via WA.</p></div>
+    </div>
   </section>
-  <script>
-    const btns = Array.from(document.querySelectorAll('.filter-btn')) as HTMLElement[];
-    const cards = Array.from(document.querySelectorAll('#grid .prod')) as HTMLElement[];
-    const count = document.getElementById('filter-count');
-    const paint = (active: string) => {
-      btns.forEach((b) => {
-        const on = b.getAttribute('data-filter') === active;
-        b.classList.toggle('bg-zinc-950', on);
-        b.classList.toggle('text-white', on);
-        b.classList.toggle('border-zinc-950', on);
-        b.classList.toggle('border-zinc-300', !on);
-      });
-    };
-    const apply = (f: string) => {
-      let n = 0;
-      cards.forEach((c) => {
-        const show = f === 'Semua' || c.getAttribute('data-badge') === f;
-        c.style.display = show ? '' : 'none';
-        if (show) n++;
-      });
-      if (count) count.textContent = `Menampilkan ${n} dari ${cards.length} produk`;
-      paint(f);
-    };
-    btns.forEach((b) => b.addEventListener('click', () => apply(b.getAttribute('data-filter') || 'Semua')));
-    apply('Semua');
-  </script>
 </BaseLayout>

@@ -1,10 +1,13 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 ---
-<BaseLayout title="404 — Halaman tidak ditemukan" description="Halaman tidak ditemukan.">
-  <div class="max-w-xl mx-auto px-4 py-20 text-center">
-    <h1 class="text-5xl font-extrabold">404</h1>
-    <p class="mt-4">Halaman tidak ditemukan.</p>
-    <a href="/" class="mt-6 inline-block underline">Kembali ke beranda</a>
-  </div>
+<BaseLayout title="404 — Halaman tidak ditemukan | Istana Cosmetics Jambi" description="Halaman tidak ditemukan di Istana Cosmetics Jambi. Kembali ke katalog grosir.">
+  <section class="max-w-7xl mx-auto px-4 py-20 min-h-[70dvh]">
+    <div class="md:pl-[16vw]">
+      <p class="text-sm font-bold uppercase tracking-widest text-amber-700">404</p>
+      <h1 class="mt-2 text-4xl md:text-6xl tracking-tighter leading-none font-extrabold">Halaman tidak ditemukan</h1>
+      <p class="mt-3 text-base text-gray-600 max-w-[65ch]">Tautan mungkin berubah. Kembali ke beranda atau minta pricelist via WA.</p>
+      <div class="mt-6 flex flex-wrap gap-3"><a href="/" class="bg-amber-700 text-white px-6 py-3 rounded-full text-sm font-medium active:scale-[0.98]">Beranda</a><a href="/katalog" class="border border-zinc-300 px-6 py-3 rounded-full text-sm font-medium active:scale-[0.98]">Katalog</a></div>
+    </div>
+  </section>
 </BaseLayout>

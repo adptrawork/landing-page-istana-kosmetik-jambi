@@ -21,13 +21,13 @@ const active = (h: string) => (h === '/' ? path === '/' : path.startsWith(h));
 <head>
   <BaseHead title={title} description={description} canonicalUrl={canonicalUrl} image={image} />
 </head>
-<body class="bg-[#f9fafb] text-zinc-950 antialiased">
-  <header class="sticky top-0 z-40 bg-white/70 backdrop-blur-xl border-b border-white/10">
+<body class="bg-[#faf8f2] text-zinc-950 antialiased">
+  <header class="sticky top-0 z-40 bg-[#faf8f2]/80 backdrop-blur-xl border-b border-amber-900/10">
     <nav class="max-w-7xl mx-auto flex items-center justify-between px-4 py-3" aria-label="Navigasi utama">
-      <a href="/" class="font-bold tracking-tight text-sm md:text-base">{business.name}</a>
+      <a href="/" class="font-extrabold tracking-tighter text-sm md:text-base">ISTANA <span class="text-amber-700">COSMETICS</span></a>
       <div class="hidden md:flex gap-6 text-sm text-zinc-600">
         {nav.map((n) => (
-          <a href={n.href} aria-current={active(n.href) ? 'page' : undefined} class:list={["transition hover:text-zinc-950", active(n.href) && "text-zinc-950 font-semibold underline underline-offset-8"]}>{n.label}</a>
+          <a href={n.href} aria-current={active(n.href) ? 'page' : undefined} class:list={["transition hover:text-zinc-950", active(n.href) && "text-zinc-950 font-semibold underline underline-offset-8 decoration-amber-700"]}>{n.label}</a>
         ))}
       </div>
       <div class="flex md:hidden gap-4 text-sm text-zinc-600">
@@ -35,16 +35,16 @@ const active = (h: string) => (h === '/' ? path === '/' : path.startsWith(h));
           <a href={n.href} aria-current={active(n.href) ? 'page' : undefined} class:list={["transition hover:text-zinc-950", active(n.href) && "text-zinc-950 font-semibold"]}>{n.label}</a>
         ))}
       </div>
-      <a href={cta} class="bg-rose-700 text-white px-5 py-2.5 rounded-full text-sm font-medium transition-all duration-300 hover:-translate-y-0.5 active:scale-[0.98]" style="transition-timing-function:cubic-bezier(0.16,1,0.3,1)">Pesan via WA</a>
+      <a href={cta} class="bg-amber-700 text-white px-5 py-2.5 rounded-full text-sm font-medium transition-all duration-300 hover:-translate-y-0.5 active:scale-[0.98]" style="transition-timing-function:cubic-bezier(0.16,1,0.3,1)">Minta Pricelist</a>
     </nav>
   </header>
   <main><slot /></main>
-  <footer class="mt-20 border-t border-zinc-200 bg-white">
-    <div class="max-w-7xl mx-auto px-4 py-12 grid gap-8 md:grid-cols-12">
+  <footer class="mt-20 border-t border-amber-900/10 bg-white">
+    <div class="max-w-7xl mx-auto px-4 py-12 grid grid-cols-1 md:grid-cols-12 gap-8">
       <div class="md:col-span-7">
-        <p class="font-bold tracking-tight text-lg">{business.name}</p>
+        <p class="font-extrabold tracking-tighter text-lg">ISTANA COSMETICS JAMBI</p>
         <p class="mt-2 text-base text-gray-600 leading-relaxed max-w-[65ch]">{business.address} — {business.hours}</p>
-        <p class="mt-2 text-sm text-zinc-500">Harga dapat berubah, konfirmasi via WA toko. Label Terverifikasi = data dicek dari sumber resmi; Estimasi = perkiraan; Info menyusul = belum ada data publik.</p>
+        <p class="mt-2 text-sm text-zinc-500 max-w-[65ch]">Grosir & ecer. Harga estimasi, konfirmasi via WA admin online. Bukan cabang Pekanbaru.</p>
       </div>
       <div class="md:col-span-5">
         <p class="font-semibold text-sm">Hubungi</p>

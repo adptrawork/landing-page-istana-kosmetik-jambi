@@ -1,31 +1,28 @@
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500&display=swap');
+@import url('https://api.fontshare.com/v2/css?f[]=cabinet-grotesk@400,500,700,800&display=swap');
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --ease-premium: cubic-bezier(0.16, 1, 0.3, 1);
-}
-
+:root { --ease-premium: cubic-bezier(0.16, 1, 0.3, 1); }
 html { scroll-behavior: smooth; }
-
 body {
-  font-family: 'Outfit', ui-sans-serif, system-ui, sans-serif;
-  background: #f9fafb;
-  color: #09090b;
+  font-family: 'Cabinet Grotesk', ui-sans-serif, system-ui, sans-serif;
+  background: #faf8f2; color: #09090b;
   -webkit-font-smoothing: antialiased;
 }
-
-.font-mono-num { font-family: 'JetBrains Mono', ui-monospace, monospace; }
-
+.font-mono-num { font-family: 'Cabinet Grotesk', ui-sans-serif, system-ui, sans-serif; font-variant-numeric: tabular-nums; }
 .reveal { animation: rise 0.7s var(--ease-premium) both; }
-@keyframes rise {
-  from { opacity: 0; transform: translateY(18px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .reveal { animation: none; }
-  html { scroll-behavior: auto; }
-}
+.d-1 { animation-delay: 0.06s; } .d-2 { animation-delay: 0.12s; }
+.d-3 { animation-delay: 0.18s; } .d-4 { animation-delay: 0.24s; }
+.d-5 { animation-delay: 0.3s; } .d-6 { animation-delay: 0.36s; }
+@keyframes rise { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: translateY(0); } }
+/* accordion image slider — CSS only, transform/flex transition */
+.acc-strip { display: flex; gap: 0.75rem; }
+.acc-panel { flex: 1 1 0; min-width: 0; overflow: hidden; border-radius: 1.5rem; transition: flex 0.6s cubic-bezier(0.16,1,0.3,1); cursor: pointer; }
+.acc-panel:hover, .acc-panel:focus-within { flex: 3 1 0; }
+.acc-panel img { transition: transform 0.6s cubic-bezier(0.16,1,0.3,1), opacity 0.6s cubic-bezier(0.16,1,0.3,1); }
+.acc-panel .acc-label { opacity: 0; transform: translateY(8px); transition: opacity 0.5s cubic-bezier(0.16,1,0.3,1), transform 0.5s cubic-bezier(0.16,1,0.3,1); }
+.acc-panel:hover .acc-label, .acc-panel:focus-within .acc-label { opacity: 1; transform: translateY(0); }
+img { background: #f4f4f5; }
+@media (prefers-reduced-motion: reduce) { .reveal { animation: none; } .acc-panel, .acc-panel img { transition: none; } html { scroll-behavior: auto; } }

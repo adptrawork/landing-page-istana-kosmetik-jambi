@@ -15,8 +15,8 @@ export const business = {
   hoursStatus: 'Terverifikasi',
   instagram: 'https://www.instagram.com/istana.cosmetics',
   instagramLabel: '@istana.cosmetics • 404K pengikut',
-  title: 'Istana Cosmetics Jambi — Grosir & Ecer Kosmetik Original',
-  description: 'Istana Cosmetics Jambi Jl Kapt A Bakaruddin No.17: grosir & ecer kosmetik original, buka tiap hari. Chat admin online, harga estimasi.',
+  title: 'Istana Cosmetics Jambi — Grosir & Ecer Kapt Bakaruddin',
+  description: 'Istana Cosmetics Jl Kapt A Bakaruddin No.17 Jambi: pusat grosir & ecer kosmetik original 404rb followers. Buka tiap hari, chat admin online.',
   canonicalPath: '/',
   ogImage: '/images/istana-hero.jpg',
 };
