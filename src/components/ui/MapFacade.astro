@@ -5,8 +5,8 @@ const { embed } = Astro.props;
 ---
 <!-- Ref: MapFacade klik-untuk-muat — pratinjau statis, iframe hanya setelah klik (hemat request + privasi) -->
 <div data-mapfacade data-src={embed} data-title={`Peta ${business.name}`} class="relative w-full max-w-full aspect-[4/3] md:aspect-[16/11] overflow-hidden border rule bg-paper-2">
-  <button data-mapbtn type="button" class="group absolute inset-0 grid w-full h-full min-h-[48px] place-items-end cursor-pointer tap" aria-label={`Muat peta lokasi ${business.name}`}>
-    <img src="/images/istana-hero.jpg" alt="" aria-hidden="true" width="800" height="600" loading="lazy" decoding="async" class="absolute inset-0 h-full w-full object-cover opacity-90" />
+  <button data-mapbtn type="button" class="group absolute inset-0 grid w-full h-full min-h-[48px] place-items-end cursor-pointer tap" aria-label="Muat peta">
+    <img src="/images/istana-hero.webp" alt="" aria-hidden="true" width="800" height="600" loading="lazy" decoding="async" class="absolute inset-0 h-full w-full object-cover opacity-90" />
     <span class="absolute inset-0 bg-ink/35"></span>
     <span class="relative z-10 grid gap-3 p-6 md:p-7 w-full text-left">
       <span class="inline-flex items-center gap-2 text-[0.66rem] font-medium uppercase tracking-[0.24em] text-paper/80">
