@@ -1,0 +1,63 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { business, products, waLink } from '../data/business';
+const badges = ['Semua', ...Array.from(new Set(products.map((p) => p.badge)))];
+---
+<BaseLayout title={`Katalog — ${business.title}`} description={`Katalog lengkap ${business.name}: ${products.length} produk dengan tombol pesan WA per item.`} canonicalPath="/katalog" image={business.ogImage}>
+  <section class="max-w-7xl mx-auto px-4 py-12 w-full min-h-[70dvh]">
+    <p class="text-sm font-medium text-rose-700">Katalog</p>
+    <h1 class="mt-2 text-3xl md:text-5xl tracking-tighter leading-none font-bold max-w-[20ch]">Semua Produk {business.name}</h1>
+    <p class="mt-3 text-base text-gray-600 leading-relaxed max-w-[65ch]">Filter berdasar label: Terverifikasi = identitas produk dicek dari sumber resmi; Estimasi = harga/foto perkiraan; Info menyusul = data belum ada. Harga dapat berubah, konfirmasi via WA toko.</p>
+    <div class="mt-6 flex flex-wrap gap-2" role="group" aria-label="Filter label produk">
+      {badges.map((b, i) => (
+        <button data-filter={b} class:list={["filter-btn border px-5 py-2.5 rounded-full text-sm font-medium transition-all", i === 0 ? "bg-zinc-950 text-white border-zinc-950" : "border-zinc-300 hover:border-zinc-950"]}>{b}</button>
+      ))}
+    </div>
+    <p id="filter-count" class="mt-4 text-sm text-zinc-500" aria-live="polite"></p>
+    <div id="grid" class="mt-6 grid grid-cols-1 md:grid-cols-2 gap-6">
+      {products.map((p, i) => (
+        <article class:list={["prod", i % 2 === 1 && "md:mt-10"]} data-badge={p.badge}>
+          <div class="bg-white border border-slate-200/50 rounded-[2.5rem] p-6 shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] transition-all duration-300 hover:-translate-y-1">
+            <div class="rounded-3xl overflow-hidden bg-zinc-100 aspect-[4/3]">
+              <img src={p.image} alt={p.alt} width={p.w} height={p.h} loading="lazy" class="w-full h-full object-cover" />
+            </div>
+            <p class="mt-4 text-xs font-medium text-rose-700">{p.badge} • {p.stock}</p>
+            <h2 class="mt-1 font-semibold text-lg tracking-tight">{p.name}</h2>
+            <p class="mt-1 text-xs text-zinc-400">{p.source}</p>
+          </div>
+          <div class="mt-3 flex items-center justify-between px-2 gap-2">
+            <p class="font-mono-num font-semibold text-sm">{p.price}</p>
+            <a href={waLink(`Halo ${business.name}, saya mau pesan ${p.name} (${p.price}). Apakah ready?`)} class="bg-zinc-950 text-white px-5 py-2.5 rounded-full text-sm font-medium transition-all duration-300 hover:-translate-y-0.5 active:scale-[0.98]">Pesan via WA</a>
+          </div>
+        </article>
+      ))}
+    </div>
+    <p class="mt-8 text-sm text-zinc-500">Belum menemukan yang dicari? <a class="underline underline-offset-4 text-zinc-900" href={waLink(`Halo ${business.name}, saya cari produk lain. Boleh info katalog lengkap?`)}>Tanya katalog lengkap via WA</a></p>
+  </section>
+  <script>
+    const btns = Array.from(document.querySelectorAll('.filter-btn')) as HTMLElement[];
+    const cards = Array.from(document.querySelectorAll('#grid .prod')) as HTMLElement[];
+    const count = document.getElementById('filter-count');
+    const paint = (active: string) => {
+      btns.forEach((b) => {
+        const on = b.getAttribute('data-filter') === active;
+        b.classList.toggle('bg-zinc-950', on);
+        b.classList.toggle('text-white', on);
+        b.classList.toggle('border-zinc-950', on);
+        b.classList.toggle('border-zinc-300', !on);
+      });
+    };
+    const apply = (f: string) => {
+      let n = 0;
+      cards.forEach((c) => {
+        const show = f === 'Semua' || c.getAttribute('data-badge') === f;
+        c.style.display = show ? '' : 'none';
+        if (show) n++;
+      });
+      if (count) count.textContent = `Menampilkan ${n} dari ${cards.length} produk`;
+      paint(f);
+    };
+    btns.forEach((b) => b.addEventListener('click', () => apply(b.getAttribute('data-filter') || 'Semua')));
+    apply('Semua');
+  </script>
+</BaseLayout>

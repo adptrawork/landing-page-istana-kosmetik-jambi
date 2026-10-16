@@ -5,7 +5,8 @@ interface Props {
   canonicalUrl: string;
   image?: string;
 }
-const { title, description, canonicalUrl, image = '/default-og.jpg' } = Astro.props;
+import { business } from '../data/business';
+const { title, description, canonicalUrl, image = business.ogImage } = Astro.props;
 const ogImage = new URL(image, Astro.site ?? Astro.url).toString();
 ---
 <meta charset="utf-8" />
@@ -30,12 +31,12 @@ const ogImage = new URL(image, Astro.site ?? Astro.url).toString();
 <script type="application/ld+json" set:html={JSON.stringify({
   "@context": "https://schema.org",
   "@type": "Store",
-  name: "Istana Kosmetik Jambi",
-  url: "https://istanakosmetik-jambi.pages.dev",
+  name: business.name,
+  url: Astro.site?.toString(),
   image: ogImage,
   description: description,
-  address: { "@type": "PostalAddress", addressLocality: "Kota Jambi", addressRegion: "Jambi", addressCountry: "ID" },
-  telephone: "+62-812-3456-7890",
-  openingHours: "Mo-Sa 09:00-21:00",
-  aggregateRating: { "@type": "AggregateRating", ratingValue: "4.7", reviewCount: "120" }
+  address: { "@type": "PostalAddress", streetAddress: business.address, addressLocality: business.city, addressRegion: "Jambi", addressCountry: "ID" },
+  telephone: business.phone,
+  openingHours: business.hours,
+  aggregateRating: { "@type": "AggregateRating", ratingValue: business.rating, reviewCount: business.reviewCount }
 })} />
