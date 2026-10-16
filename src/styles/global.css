@@ -1,59 +1,96 @@
+/* Istana Cosmetics Jambi — editorial beauty retail
+   Palet: paper #F8F0E7 · paper-2 #E7D7C4 · ink #231F1C · accent #B72C25 · blush #E7A59B */
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-:root { --ease-premium: cubic-bezier(0.16, 1, 0.3, 1); }
-html { scroll-behavior: smooth; }
-body {
-  font-family: 'Cabinet Grotesk', ui-sans-serif, system-ui, sans-serif;
-  background: #faf8f2; color: #09090b;
-  -webkit-font-smoothing: antialiased;
+:root {
+  --paper: #F8F0E7;
+  --paper-2: #E7D7C4;
+  --ink: #231F1C;
+  --ink-soft: rgba(35, 31, 28, 0.62);
+  --accent: #B72C25;
+  --blush: #E7A59B;
+  --rule: rgba(35, 31, 28, 0.14);
+  --ease-premium: cubic-bezier(0.16, 1, 0.3, 1);
 }
-.font-mono-num { font-family: 'Cabinet Grotesk', ui-sans-serif, system-ui, sans-serif; font-variant-numeric: tabular-nums; }
-.reveal { animation: rise 0.7s var(--ease-premium) both; }
-.d-1 { animation-delay: 0.06s; } .d-2 { animation-delay: 0.12s; }
-.d-3 { animation-delay: 0.18s; } .d-4 { animation-delay: 0.24s; }
-.d-5 { animation-delay: 0.3s; } .d-6 { animation-delay: 0.36s; }
-@keyframes rise { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: translateY(0); } }
-/* accordion image slider — CSS only, transform/flex transition */
-.acc-strip { display: flex; gap: 0.75rem; }
-.acc-panel { flex: 1 1 0; min-width: 0; overflow: hidden; border-radius: 1.5rem; transition: flex 0.6s cubic-bezier(0.16,1,0.3,1); cursor: pointer; }
-.acc-panel:hover, .acc-panel:focus-within { flex: 3 1 0; }
-.acc-panel img { transition: transform 0.6s cubic-bezier(0.16,1,0.3,1), opacity 0.6s cubic-bezier(0.16,1,0.3,1); }
-.acc-panel .acc-label { opacity: 0; transform: translateY(8px); transition: opacity 0.5s cubic-bezier(0.16,1,0.3,1), transform 0.5s cubic-bezier(0.16,1,0.3,1); }
-.acc-panel:hover .acc-label, .acc-panel:focus-within .acc-label { opacity: 1; transform: translateY(0); }
-img { background: #f4f4f5; }
-@media (prefers-reduced-motion: reduce) { .reveal { animation: none; } .acc-panel, .acc-panel img { transition: none; } html { scroll-behavior: auto; } }
 
-/* ==== overhaul: responsive guard + shared components (CSS-only, tanpa dep baru) ==== */
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'DM Sans', ui-sans-serif, system-ui, sans-serif;
+  background: var(--paper);
+  color: var(--ink);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+.font-display {
+  font-family: 'Playfair Display', ui-serif, Georgia, serif;
+}
+
 html, body { max-width: 100%; overflow-x: clip; }
-img { max-width: 100%; height: auto; }
+img { max-width: 100%; height: auto; background: var(--paper-2); }
+
+/* focus-visible jelas untuk semua elemen interaktif */
+a:focus-visible,
+button:focus-visible,
+summary:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+details:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* ---- reveal + stagger (transform/opacity only) ---- */
+.reveal { animation: rise 0.7s var(--ease-premium) both; animation-delay: calc(var(--i, 0) * 90ms); }
+@keyframes rise { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+
+/* ---- ticker kategori: transform saja ---- */
 .marquee { overflow: hidden; max-width: 100%; }
-.marquee-track { display: inline-flex; gap: 2.5rem; padding-right: 2.5rem; animation: slide 22s linear infinite; will-change: transform; }
+.marquee-track { display: flex; width: max-content; animation: slide 30s linear infinite; will-change: transform; }
 @keyframes slide { from { transform: translateX(0); } to { transform: translateX(-50%); } }
-/* hamburger CSS-only: menu slide-down */
-.nav-panel { display: grid; grid-template-rows: 0fr; transition: grid-template-rows 0.35s cubic-bezier(0.16,1,0.3,1); }
+.marquee:hover .marquee-track { animation-play-state: paused; }
+
+/* ---- nav mobile: CSS-only (tanpa JS) ---- */
+.nav-panel { display: grid; grid-template-rows: 0fr; transition: grid-template-rows 0.35s var(--ease-premium); }
 .nav-panel > div { overflow: hidden; min-height: 0; }
 #nav-toggle:checked ~ div .icon-open { display: none; }
 #nav-toggle:checked ~ div .icon-close { display: block; }
 #nav-toggle:checked ~ .nav-panel { grid-template-rows: 1fr; }
-/* katalog skeleton shimmer */
-.skeleton { position: relative; overflow: hidden; background: rgba(127,127,127,0.14); }
-.skeleton::after { content: ""; position: absolute; inset: 0; transform: translateX(-100%); background: linear-gradient(90deg, transparent, rgba(255,255,255,0.45), transparent); animation: shimmer 1.4s infinite; }
-@keyframes shimmer { to { transform: translateX(100%); } }
-/* FAQ details */
-details.faq { border-radius: 1.5rem; }
-details.faq summary { cursor: pointer; list-style: none; min-height: 48px; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+
+/* ---- FAQ accordion ---- */
+details.faq summary { cursor: pointer; list-style: none; min-height: 56px; display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 1rem; }
 details.faq summary::-webkit-details-marker { display: none; }
-details.faq summary .plus { transition: transform 0.3s cubic-bezier(0.16,1,0.3,1); flex: none; }
+details.faq summary .plus { transition: transform 0.3s var(--ease-premium); flex: none; }
 details.faq[open] summary .plus { transform: rotate(45deg); }
-/* form: target sentuh + error text */
+details.faq .faq-body { animation: rise 0.4s var(--ease-premium) both; }
+
+/* ---- form ---- */
 input, select, textarea { min-height: 48px; }
 .field-err { display: none; }
 .field-invalid .field-err { display: block; }
-/* tabel: wrapper scroll-x */
-.table-wrap { overflow-x: auto; max-width: 100%; }
-/* cegah teks terpotong di kartu */
+
+/* ---- util ---- */
+.rule { border-color: var(--rule); }
+.text-soft { color: var(--ink-soft); }
 .card-clamp { overflow-wrap: anywhere; }
-@media (prefers-reduced-motion: reduce) { .marquee-track, .skeleton::after { animation: none; } }
+.link-underline { text-decoration-line: underline; text-underline-offset: 4px; text-decoration-thickness: 1px; }
+.tap { transition: transform 0.3s var(--ease-premium), background-color 0.3s var(--ease-premium), color 0.3s var(--ease-premium), border-color 0.3s var(--ease-premium); }
+.tap:active { transform: scale(0.98); }
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal { animation: none; }
+  .marquee-track { animation: none; }
+  .nav-panel { transition: none; }
+  details.faq summary .plus { transition: none; }
+  details.faq .faq-body { animation: none; }
+  html { scroll-behavior: auto; }
+  .tap { transition: none; }
+}

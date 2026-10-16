@@ -2,4 +2,8 @@
 interface Props { no: string; label: string; }
 const { no, label } = Astro.props;
 ---
-<p class="font-mono text-xs tracking-[0.2em] uppercase text-amber-700">{no} — {label}</p>
+<!-- Ref: kicker editorial — label kecil + marker blush, pengganti badge bulat -->
+<p class="flex items-center gap-3 text-[0.68rem] font-medium uppercase tracking-[0.26em] text-soft">
+  <span class="h-px w-7 bg-blush" aria-hidden="true"></span>
+  <span>{no} — {label}</span>
+</p>

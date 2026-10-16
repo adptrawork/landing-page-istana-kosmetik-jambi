@@ -1,10 +1,11 @@
 ---
 import Kicker from './Kicker.astro';
-interface Props { no: string; kicker: string; title: string; desc?: string; }
-const { no, kicker, title, desc } = Astro.props;
+interface Props { no: string; kicker: string; title: string; desc?: string; id?: string; }
+const { no, kicker, title, desc, id } = Astro.props;
 ---
-<div class="max-w-[70ch]">
+<!-- Ref: kepala section editorial — display serif kiri, tanpa centering -->
+<div class="max-w-prose">
   <Kicker no={no} label={kicker} />
-  <h2 class="mt-2 text-3xl md:text-4xl tracking-tighter leading-tight font-extrabold text-zinc-950">{title}</h2>
-  {desc && <p class="mt-3 text-base text-gray-600 leading-relaxed max-w-[65ch]">{desc}</p>}
+  <h2 id={id} class="mt-4 font-display text-3xl md:text-4xl lg:text-[2.75rem] leading-[1.08] tracking-tight text-ink">{title}</h2>
+  {desc && <p class="mt-4 text-base text-soft leading-relaxed max-w-prose">{desc}</p>}
 </div>

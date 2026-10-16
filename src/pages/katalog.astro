@@ -1,66 +1,67 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Kicker from '../components/ui/Kicker.astro';
-import ProductCard from '../components/ui/ProductCard.astro';
+import ProductRow from '../components/ui/ProductRow.astro';
 import { business, products, waLink } from '../data/business';
 const badges = ['Semua', ...Array.from(new Set(products.map((p) => p.badge)))];
+const katalogDescription = 'Katalog kosmetik original Istana Cosmetics Jambi: produk skincare, makeup, dan body care dengan harga estimasi. Pesan per item via WhatsApp admin.';
+const breadcrumb = [
+  { name: 'Beranda', url: 'https://istanakosmetik-jambi.pages.dev/' },
+  { name: 'Katalog', url: 'https://istanakosmetik-jambi.pages.dev/katalog' },
+];
 ---
-<BaseLayout title={`Katalog — ${business.title}`} description={`Katalog ${business.name}: ${products.length} produk, filter label, pesan WA per item.`} canonicalPath="/katalog" image={business.ogImage}>
-  <section class="max-w-7xl mx-auto px-4 w-full py-12 md:py-20" aria-labelledby="katalog-h">
-    <Kicker no="Katalog" label="{products.length} produk" />
-    <h1 id="katalog-h" class="mt-2 text-4xl md:text-6xl tracking-tighter leading-[1.05] font-extrabold text-zinc-950 max-w-[20ch]">Semua produk {business.name}</h1>
-    <p class="mt-3 text-base text-gray-600 leading-relaxed max-w-[65ch]">Filter berdasar label: Terverifikasi = dicek sumber resmi; Estimasi = perkiraan; Info menyusul = belum ada. Harga dapat berubah, konfirmasi via WA.</p>
-    <div class="mt-6 flex flex-wrap gap-2" role="group" aria-label="Filter label produk">
+<BaseLayout title="Katalog Kosmetik Original — Istana Cosmetics Jambi" description={katalogDescription} canonicalPath="/katalog" image={business.ogImage} breadcrumb={breadcrumb}>
+  <!-- Ref: katalog sebagai rak ber-rule + filter label, kartu produk dihindari -->
+  <section class="max-w-7xl mx-auto px-4 md:px-8 w-full pt-10 pb-16 md:pt-16 md:pb-24" aria-labelledby="katalog-h">
+    <Kicker no="Katalog" label={`${products.length} produk`} />
+    <h1 id="katalog-h" class="mt-4 font-display text-[2.5rem] md:text-6xl leading-[1.04] tracking-tight text-ink max-w-[18ch]">Rak lengkap {business.name}</h1>
+    <p class="mt-5 text-base text-soft leading-relaxed max-w-prose">
+      Filter berdasar label: <span class="text-ink">Teruji</span> = data dicek dari sumber resmi brand, <span class="text-ink">Estimasi</span> = perkiraan. Semua harga dapat berubah dan dikonfirmasi via WhatsApp.
+    </p>
+
+    <div class="mt-8 flex flex-wrap gap-2" role="group" aria-label="Filter label produk">
       {badges.map((b, i) => (
-        <button data-filter={b} class:list={["filter-btn border px-5 min-h-[48px] rounded-full text-sm font-medium transition-all duration-300 active:scale-[0.98]", i === 0 ? "bg-zinc-950 text-white border-zinc-950" : "border-zinc-300 hover:border-zinc-950"]}>{b}</button>
+        <button type="button" data-filter={b} aria-pressed={i === 0 ? 'true' : 'false'} class:list={["filter-btn border rule px-5 min-h-[46px] rounded-full text-sm font-medium tap", i === 0 ? "bg-ink text-paper border-transparent" : "bg-transparent text-ink hover:border-accent hover:text-accent"]}>{b}</button>
       ))}
     </div>
-    <p id="filter-count" class="mt-4 font-mono text-xs tracking-widest uppercase text-zinc-400" aria-live="polite"></p>
-    <div id="skel" class="mt-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6" aria-hidden="true">
-      {[0,1,2,3].map(() => (
-        <div class="bg-white border border-slate-200/50 rounded-[2.5rem] p-6">
-          <div class="skeleton rounded-3xl aspect-[4/3] w-full"></div>
-          <div class="skeleton rounded-full h-4 w-2/3 mt-4"></div>
-          <div class="skeleton rounded-full h-4 w-1/3 mt-2"></div>
-        </div>
-      ))}
-    </div>
-    <div id="grid" class="hidden mt-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+    <p id="filter-count" class="mt-5 text-[0.68rem] font-medium uppercase tracking-[0.24em] text-soft" aria-live="polite"></p>
+
+    <div id="shelf" class="mt-6 border-t rule">
       {products.map((p) => (
         <div class="prod" data-badge={p.badge}>
-          <ProductCard p={p} titleTag="h2" />
+          <ProductRow p={p} titleTag="h2" />
         </div>
       ))}
     </div>
-    <div id="empty" class="hidden mt-6 bg-white border border-amber-900/10 rounded-[2.5rem] p-6 shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] text-center">
-      <svg class="mx-auto" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5M8 11h6"/></svg>
-      <p class="mt-4 font-semibold tracking-tight text-lg text-zinc-950">Tidak ada produk pada filter ini</p>
-      <p class="mt-2 text-base text-gray-600 max-w-[65ch] mx-auto">Coba filter lain atau tanya katalog lengkap via WhatsApp.</p>
-      <a href={waLink(`Halo ${business.name}, saya cari produk lain. Boleh info katalog lengkap?`)} class="mt-5 inline-flex items-center justify-center bg-amber-700 text-white px-6 min-h-[48px] rounded-full text-sm font-medium active:scale-[0.98]">Tanya via WA</a>
+
+    <div id="empty" class="hidden mt-6 border-t rule py-14 text-center">
+      <svg class="mx-auto text-soft" width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5M8 11h6"/></svg>
+      <p class="mt-4 font-display text-xl text-ink">Tidak ada produk pada filter ini</p>
+      <p class="mt-2 text-base text-soft max-w-prose mx-auto">Coba label lain, atau tanya katalog lengkap langsung ke admin online.</p>
+      <a href={waLink(`Halo ${business.name}, saya cari produk lain. Boleh info katalog lengkap?`)} class="mt-5 inline-flex items-center justify-center bg-ink text-paper px-6 min-h-[46px] rounded-full text-sm font-medium tap hover:bg-accent">Tanya katalog via WA</a>
     </div>
-    <p class="mt-8 text-sm text-gray-600">Belum menemukan yang dicari? <a class="underline underline-offset-4 text-zinc-950 min-h-[48px] inline-flex items-center" href={waLink(`Halo ${business.name}, saya cari produk lain. Boleh info katalog lengkap?`)}>Tanya katalog lengkap via WA</a></p>
+
+    <p class="mt-10 text-sm text-soft">Belum menemukan yang dicari? <a class="link-underline text-ink hover:text-accent" href={waLink(`Halo ${business.name}, saya cari produk lain. Boleh info katalog lengkap?`)}>Tanya katalog lengkap via WA</a>.</p>
   </section>
+
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       const btns = Array.from(document.querySelectorAll('.filter-btn')) as HTMLElement[];
-      const cards = Array.from(document.querySelectorAll('#grid .prod')) as HTMLElement[];
+      const rows = Array.from(document.querySelectorAll('#shelf .prod')) as HTMLElement[];
       const count = document.getElementById('filter-count');
       const empty = document.getElementById('empty');
-      const grid = document.getElementById('grid');
-      const skel = document.getElementById('skel');
-      const ON = "bg-zinc-950 text-white border-zinc-950".split(' ');
-      const OFF = "border-zinc-300 hover:border-zinc-950".split(' ');
-      const paint = (act: string) => { btns.forEach((b) => { const on = b.getAttribute('data-filter') === act; ON.forEach((c) => b.classList.toggle(c, on)); OFF.forEach((c) => b.classList.toggle(c, !on)); }); };
+      const ON = ['bg-ink', 'text-paper', 'border-transparent'];
+      const OFF = ['bg-transparent', 'text-ink', 'hover:border-accent', 'hover:text-accent'];
+      const paint = (act: string) => { btns.forEach((b) => { const on = b.getAttribute('data-filter') === act; ON.forEach((c) => b.classList.toggle(c, on)); OFF.forEach((c) => b.classList.toggle(c, !on)); b.setAttribute('aria-pressed', on ? 'true' : 'false'); }); };
       const apply = (f: string) => {
         let n = 0;
-        cards.forEach((c) => { const show = f === 'Semua' || c.getAttribute('data-badge') === f; c.style.display = show ? '' : 'none'; if (show) n++; });
-        if (count) count.textContent = n > 0 ? `Menampilkan ${n} dari ${cards.length} produk` : 'Tidak ada produk pada filter ini';
+        rows.forEach((r) => { const show = f === 'Semua' || r.getAttribute('data-badge') === f; r.style.display = show ? '' : 'none'; if (show) n++; });
+        if (count) count.textContent = n > 0 ? `Menampilkan ${n} dari ${rows.length} produk` : 'Tidak ada produk pada label ini';
         if (empty) empty.classList.toggle('hidden', n > 0);
         paint(f);
       };
       btns.forEach((b) => b.addEventListener('click', () => apply(b.getAttribute('data-filter') || 'Semua')));
       apply('Semua');
-      setTimeout(() => { if (skel) skel.classList.add('hidden'); if (grid) grid.classList.remove('hidden'); }, 500);
     });
   </script>
 </BaseLayout>

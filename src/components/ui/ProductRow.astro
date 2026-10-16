@@ -1,0 +1,30 @@
+---
+import { business, waLink } from '../../data/business';
+import { shelfType } from '../../data/shelf-types';
+interface P { name: string; price: string; badge: string; stock: string; image: string; alt: string; w: number; h: number; source: string; }
+interface Props { p: P; titleTag?: string }
+const { p, titleTag = 'h3' } = Astro.props;
+const Tag = titleTag as any;
+const msg = waLink(`Halo ${business.name}, saya mau pesan ${p.name} (${p.price}). Apakah ready?`);
+const jenis = shelfType(p.name);
+---
+<!-- Ref: baris rak tanpa kartu — divide rule, gambar kecil, nama brand + jenis (pola ritel beauty majalah) -->
+<article class="card-clamp grid grid-cols-[auto_1fr] md:grid-cols-[7rem_1fr_auto] gap-x-4 md:gap-x-7 gap-y-4 items-center py-6 border-b rule">
+  <div class="row-span-2 md:row-span-1 h-[4.5rem] w-[4.5rem] md:h-[6.5rem] md:w-[6.5rem] overflow-hidden bg-paper-2">
+    <img src={p.image} alt={p.alt} width={p.w} height={p.h} loading="lazy" decoding="async" class="h-full w-full object-cover" />
+  </div>
+
+  <div class="min-w-0">
+    <p class="text-[0.64rem] font-medium uppercase tracking-[0.2em] text-soft">{jenis} · {p.badge}</p>
+    <Tag class="mt-1 font-display text-xl md:text-2xl leading-snug text-ink">{p.name}</Tag>
+    <p class="mt-1 text-xs text-soft">{p.source}</p>
+  </div>
+
+  <div class="col-span-2 md:col-span-1 flex flex-wrap items-center justify-between md:justify-end md:flex-col md:items-end gap-3 md:gap-2">
+    <p class="text-sm font-medium text-ink tabular-nums">{p.price}</p>
+    <a href={msg} class="inline-flex items-center justify-center gap-2 bg-ink text-paper px-5 min-h-[44px] rounded-full text-sm font-medium tap hover:bg-accent">
+      Pesan via WA
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+    </a>
+  </div>
+</article>

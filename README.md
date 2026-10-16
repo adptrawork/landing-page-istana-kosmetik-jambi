@@ -2,6 +2,21 @@
 
 Astro + Tailwind, Full SEO 100%, 1 repo per 1 bisnis.
 
+## Sistem desain (redesign editorial beauty)
+
+- Konsep: editorial beauty ritel kurasi — hangat, tactile, premium tapi membumi.
+- Font pair: **Playfair Display** (display/headline 500/600/700 + italic 500) + **DM Sans** (body/UI 400/500/700). Dimuat non-blocking dari Google Fonts (`preconnect` + `display=swap`).
+- Token warna (CSS variable di `src/styles/global.css` + theme Tailwind):
+  - `--paper #F8F0E7` (background utama)
+  - `--paper-2 #E7D7C4` (tint/field)
+  - `--ink #231F1C` (teks utama, off-black)
+  - `--ink-soft rgba(35,31,28,.62)` (teks sekunder)
+  - `--accent #B72C25` (satu-satunya accent — deep red)
+  - `--blush #E7A59B` (tint tipis: marker/garis, bukan tombol kedua)
+- Struktur beranda: split hero asimetris → ticker kategori → rak produk tanpa kartu (`divide`/`border-t`) → blok edukasi zig-zag 2 kolom → fakta ber-rule + daftar brand → FAQ accordion + panduan → detail kunjungan (MapFacade) → footer NAP.
+- Prinsip: grid CSS (bukan flex+`calc()`), animasi hanya `transform`/`opacity` dengan `prefers-reduced-motion`, ikon SVG inline `currentColor` (tanpa emoji), `min-h-[100dvh]` untuk section penuh, JS per halaman < 5 KB tanpa dependency baru.
+- MapFacade (peta klik-untuk-muat) dipertahankan di beranda & halaman tentang.
+
 ## Dev
 ```bash
 npm install

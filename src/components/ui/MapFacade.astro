@@ -3,12 +3,21 @@ import { business } from '../../data/business';
 interface Props { embed: string }
 const { embed } = Astro.props;
 ---
-<div data-mapfacade data-src={embed} data-title={`Peta ${business.name}`} class="rounded-[2rem] overflow-hidden border border-amber-900/10 aspect-video w-full max-w-full bg-zinc-100">
-  <button data-mapbtn type="button" class="relative block w-full h-full min-h-[48px] text-left cursor-pointer" aria-label="Muat peta Google Maps {business.name}">
-    <img src={business.ogImage} alt="" aria-hidden="true" width="800" height="450" loading="lazy" decoding="async" class="absolute inset-0 w-full h-full object-cover" />
-    <span class="absolute inset-0 flex flex-col justify-end gap-2 p-6" style="background:linear-gradient(to top, rgba(0,0,0,0.65), transparent 60%)">
-      <span class="text-white text-sm leading-relaxed max-w-[60ch]">{business.address}</span>
-      <span class="inline-flex items-center justify-center self-start bg-white text-zinc-950 px-6 min-h-[48px] rounded-full text-sm font-medium">Muat Peta</span>
+<!-- Ref: MapFacade klik-untuk-muat — pratinjau statis, iframe hanya setelah klik (hemat request + privasi) -->
+<div data-mapfacade data-src={embed} data-title={`Peta ${business.name}`} class="relative w-full max-w-full aspect-[4/3] md:aspect-[16/11] overflow-hidden border rule bg-paper-2">
+  <button data-mapbtn type="button" class="group absolute inset-0 grid w-full h-full min-h-[48px] place-items-end cursor-pointer tap" aria-label={`Muat peta lokasi ${business.name}`}>
+    <img src="/images/istana-hero.jpg" alt="" aria-hidden="true" width="800" height="600" loading="lazy" decoding="async" class="absolute inset-0 h-full w-full object-cover opacity-90" />
+    <span class="absolute inset-0 bg-ink/35"></span>
+    <span class="relative z-10 grid gap-3 p-6 md:p-7 w-full text-left">
+      <span class="inline-flex items-center gap-2 text-[0.66rem] font-medium uppercase tracking-[0.24em] text-paper/80">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M12 21s7-5.6 7-11a7 7 0 1 0-14 0c0 5.4 7 11 7 11Z"/><circle cx="12" cy="10" r="2.5"/></svg>
+        Lokasi toko
+      </span>
+      <span class="text-paper font-display text-lg md:text-xl leading-snug max-w-[34ch]">{business.address}</span>
+      <span class="inline-flex items-center gap-2 self-start bg-paper text-ink px-5 min-h-[46px] rounded-full text-sm font-medium tap group-hover:bg-accent group-hover:text-paper">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M4 6h16v12H4z"/><path d="M4 9l8 5 8-5"/></svg>
+        Muat peta
+      </span>
     </span>
   </button>
 </div>

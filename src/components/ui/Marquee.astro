@@ -1,12 +1,17 @@
 ---
-interface Props { items: string[] }
-const { items } = Astro.props;
+interface Props { items: string[]; label?: string }
+const { items, label = 'Kategori produk yang tersedia di toko' } = Astro.props;
 const row = [...items, ...items];
 ---
-<div class="marquee bg-amber-50 border-y border-amber-900/10" aria-hidden="true">
-  <div class="marquee-track py-3">
+<!-- Ref: ticker kategori — marquee CSS transform, fallback statis saat prefers-reduced-motion -->
+<div class="marquee bg-paper-2 border-y rule" role="presentation">
+  <p class="sr-only">{label}</p>
+  <div class="marquee-track py-3" aria-hidden="true">
     {row.map((m) => (
-      <span class="font-mono text-xs tracking-[0.2em] uppercase text-amber-700 border border-amber-200/60 text-amber-800 rounded-full px-4 py-2 whitespace-nowrap">{m}</span>
+      <span class="inline-flex items-center gap-6 pr-6 text-[0.8rem] font-medium uppercase tracking-[0.26em] text-ink/70 whitespace-nowrap">
+        <span class="font-display italic text-base tracking-normal text-ink">{m}</span>
+        <svg width="9" height="9" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M6 1 11 6 6 11 1 6Z"/></svg>
+      </span>
     ))}
   </div>
 </div>
