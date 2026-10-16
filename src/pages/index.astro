@@ -1,0 +1,130 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { business, products, waLink } from '../data/business';
+const heroCta = waLink(`Halo ${business.name}, apakah stok produk best seller ready?`);
+---
+<BaseLayout title={business.title} description={business.description} canonicalPath={business.canonicalPath} image={business.ogImage}>
+  <!-- HERO: asymmetric split, left-aligned -->
+  <section class="max-w-7xl mx-auto px-4 w-full">
+    <div class="grid grid-cols-1 md:grid-cols-12 gap-8 items-center min-h-[88dvh] py-10">
+      <div class="md:col-span-7 reveal">
+        <p class="flex items-center gap-2 text-sm font-medium text-rose-700">
+          <svg width="16" height="16" viewBox="0 0 256 256" fill="currentColor" aria-hidden="true"><path d="M128 16l36 74 82 12-59 58 14 82-73-38-73 38 14-82-59-58 82-12z"/></svg>
+          <span class="font-mono-num">{business.rating}</span>
+          <span class="text-zinc-500">• {business.category} • {business.city}</span>
+        </p>
+        <h1 class="mt-4 text-4xl md:text-6xl tracking-tighter leading-none font-bold">{business.name} — Kosmetik Original Terlengkap di Jambi</h1>
+        <p class="mt-5 text-base text-gray-600 leading-relaxed max-w-[65ch]">Cek stok dan promo bundling bulanan tanpa harus datang. Semua produk dijamin original dan berizin BPOM, dengan reservasi cepat via WhatsApp.</p>
+        <div class="mt-8 flex flex-wrap gap-3">
+          <a href={heroCta} class="bg-rose-700 text-white px-7 py-3.5 rounded-full font-medium transition-all duration-300 hover:-translate-y-0.5 active:scale-[0.98]" style="transition-timing-function:cubic-bezier(0.16,1,0.3,1)">Pesan via WhatsApp</a>
+          <a href="#katalog" class="border border-zinc-300 px-7 py-3.5 rounded-full font-medium transition-all duration-300 hover:border-zinc-950 active:scale-[0.98]">Lihat Katalog</a>
+        </div>
+        <div class="mt-8 flex divide-x divide-zinc-200 border-t border-zinc-200 pt-5 text-sm">
+          <div class="pr-6"><p class="font-mono-num font-semibold">120+</p><p class="text-zinc-500">Ulasan Maps</p></div>
+          <div class="px-6"><p class="font-mono-num font-semibold">6</p><p class="text-zinc-500">Produk Unggulan</p></div>
+          <div class="pl-6"><p class="font-mono-num font-semibold">BPOM</p><p class="text-zinc-500">Original Terjamin</p></div>
+        </div>
+      </div>
+      <div class="md:col-span-5 reveal" style="animation-delay:calc(1 * 100ms)">
+        <div class="bg-white border border-slate-200/50 rounded-[2.5rem] p-8 md:p-10 shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)]">
+          <svg width="40" height="40" viewBox="0 0 256 256" fill="none" stroke="currentColor" stroke-width="1.5" class="text-rose-700" aria-hidden="true"><path d="M96 200l-32-32 96-96 32 32z"/><path d="M160 48l48 48-24 24-48-48z"/><path d="M64 232c-8 0-16-8-16-16 8-24 32-40 56-40h8v8c0 24-16 48-48 48z"/></svg>
+          <p class="mt-5 text-lg font-semibold tracking-tight">Katalog Online — Tanpa Antre</p>
+          <p class="mt-2 text-base text-gray-600 leading-relaxed">Foto produk asli, harga jelas, dan tombol pesan per produk langsung ke WhatsApp.</p>
+          <div class="mt-6 h-2 rounded-full bg-zinc-100 overflow-hidden"><div class="h-full w-3/4 rounded-full bg-rose-700"></div></div>
+          <p class="mt-2 text-xs text-zinc-500">Stok diperbarui mengikuti info toko</p>
+        </div>
+        <p class="mt-3 text-xs text-zinc-400">Panel visual — ganti dengan foto etalase asli saat tersedia.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- KEUNGGULAN: asymmetric bento, bukan 3-col equal -->
+  <section id="fitur" class="max-w-7xl mx-auto px-4 py-8 w-full">
+    <p class="text-sm font-medium text-rose-700">Keunggulan</p>
+    <h2 class="mt-2 text-3xl md:text-4xl tracking-tighter leading-none font-bold max-w-[20ch]">Kenapa belanja di {business.name}?</h2>
+    <div class="mt-8 grid grid-cols-1 md:grid-cols-12 gap-6">
+      <div class="md:col-span-7 reveal" style="animation-delay:calc(0 * 100ms)">
+        <div class="bg-white border border-slate-200/50 rounded-[2.5rem] p-8 md:p-10 shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] transition-all duration-300 hover:-translate-y-1 active:scale-[0.98]">
+          <svg width="28" height="28" viewBox="0 0 256 256" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M128 24l96 36v64c0 56-40 96-96 108-56-12-96-52-96-108V60z"/><path d="M88 128l28 28 52-56"/></svg>
+          <p class="mt-4 font-semibold text-lg tracking-tight">Original dan BPOM</p>
+          <p class="mt-1 text-base text-gray-600 leading-relaxed max-w-[65ch]">Fondasi kepercayaan pembeli skincare. Setiap produk tercantum status original dan izin.</p>
+        </div>
+      </div>
+      <div class="md:col-span-5 reveal" style="animation-delay:calc(1 * 100ms)">
+        <div class="bg-white border border-slate-200/50 rounded-[2.5rem] p-8 md:p-10 shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] transition-all duration-300 hover:-translate-y-1 active:scale-[0.98]">
+          <svg width="28" height="28" viewBox="0 0 256 256" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M32 80l96-48 96 48v96l-96 48-96-48z"/><path d="M32 80l96 48 96-48M128 128v96"/></svg>
+          <p class="mt-4 font-semibold text-lg tracking-tight">Cek Stok Online</p>
+          <p class="mt-1 text-base text-gray-600 leading-relaxed">Lihat ketersediaan tanpa datang ke toko.</p>
+        </div>
+      </div>
+      <div class="md:col-span-5 reveal" style="animation-delay:calc(2 * 100ms)">
+        <div class="bg-white border border-slate-200/50 rounded-[2.5rem] p-8 md:p-10 shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] transition-all duration-300 hover:-translate-y-1 active:scale-[0.98]">
+          <svg width="28" height="28" viewBox="0 0 256 256" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="32" y="80" width="192" height="48" rx="8"/><path d="M72 80v-16a56 56 0 01112 0v16M128 128v48"/></svg>
+          <p class="mt-4 font-semibold text-lg tracking-tight">Promo Bundling Bulanan</p>
+          <p class="mt-1 text-base text-gray-600 leading-relaxed">Hemat beli paket routine sekaligus.</p>
+        </div>
+      </div>
+      <div class="md:col-span-7 reveal" style="animation-delay:calc(3 * 100ms)">
+        <div class="bg-white border border-slate-200/50 rounded-[2.5rem] p-8 md:p-10 shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] transition-all duration-300 hover:-translate-y-1 active:scale-[0.98]">
+          <svg width="28" height="28" viewBox="0 0 256 256" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M48 96a80 80 0 01160 0c0 40-24 56-24 88H72c0-32-24-48-24-88z"/><path d="M96 208a32 32 0 0064 0"/></svg>
+          <p class="mt-4 font-semibold text-lg tracking-tight">Reservasi dan Edukasi Routine</p>
+          <p class="mt-1 text-base text-gray-600 leading-relaxed max-w-[65ch]">Amankan produk favorit via WA dan dipandu memilih produk sesuai jenis kulit. Lokasi strategis di Kota Jambi dengan rute Maps jelas.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- KATALOG: 2-col zig-zag offset, bukan 3 equal -->
+  <section id="katalog" class="max-w-7xl mx-auto px-4 py-12 w-full">
+    <p class="text-sm font-medium text-rose-700">Katalog</p>
+    <h2 class="mt-2 text-3xl md:text-4xl tracking-tighter leading-none font-bold">Produk Unggulan</h2>
+    <p class="mt-3 text-base text-gray-600 leading-relaxed max-w-[65ch]">Setiap produk punya tombol pesan dengan format chat rapi ke WhatsApp.</p>
+    <div class="mt-8 grid grid-cols-1 md:grid-cols-2 gap-6">
+      {products.map((p, i) => (
+        <article class:list={["reveal", i % 2 === 1 && "md:mt-10"]} style={`animation-delay:calc(${i} * 100ms)`}>
+          <div class="bg-white border border-slate-200/50 rounded-[2.5rem] p-8 shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] transition-all duration-300 hover:-translate-y-1">
+            <div class="h-28 rounded-3xl bg-zinc-100"></div>
+            <p class="mt-5 text-xs font-medium text-rose-700">{p.badge} • {p.stock}</p>
+            <h3 class="mt-1 font-semibold text-lg tracking-tight">{p.name}</h3>
+          </div>
+          <div class="mt-3 flex items-center justify-between px-2">
+            <p class="font-mono-num font-semibold">{p.price}</p>
+            <a href={waLink(`Halo ${business.name}, saya mau pesan ${p.name} (${p.price}). Apakah ready?`)} class="bg-zinc-950 text-white px-5 py-2.5 rounded-full text-sm font-medium transition-all duration-300 hover:-translate-y-0.5 active:scale-[0.98]">Pesan via WhatsApp</a>
+          </div>
+        </article>
+      ))}
+    </div>
+    <p class="mt-6 text-sm text-zinc-500">Belum menemukan yang dicari? <a class="underline underline-offset-4 text-zinc-900" href={waLink(`Halo ${business.name}, saya cari produk lain. Boleh info katalog lengkap?`)}>Tanya katalog lengkap via WA</a> — empty state diarahkan ke chat, bukan halaman kosong.</p>
+  </section>
+
+  <!-- ULASAN + MAPS: split 5/7 -->
+  <section id="testimoni" class="max-w-7xl mx-auto px-4 py-12 w-full">
+    <div class="grid grid-cols-1 md:grid-cols-12 gap-8">
+      <div class="md:col-span-5">
+        <p class="text-sm font-medium text-rose-700">Ulasan</p>
+        <h2 class="mt-2 text-3xl md:text-4xl tracking-tighter leading-none font-bold">Rating <span class="font-mono-num">{business.rating}</span> di Google Maps</h2>
+        <p class="mt-3 text-base text-gray-600 leading-relaxed max-w-[65ch]">Pelanggan menilai stok lengkap dan respon WhatsApp cepat. <a class="underline underline-offset-4 text-zinc-900" href={business.mapsUrl}>Lihat di Google Maps</a></p>
+        <div class="mt-6 border-t border-zinc-200 divide-y divide-zinc-200 text-sm">
+          <p class="py-3">Stok lengkap, tidak perlu datang untuk cek — pembeli Jambi</p>
+          <p class="py-3">Fast respon saat tanya bundling bulanan — pelanggan routine</p>
+          <p class="py-3">Produk dijamin original, ada label BPOM — pembeli baru</p>
+        </div>
+      </div>
+      <div class="md:col-span-7">
+        <div class="rounded-[2.5rem] overflow-hidden border border-slate-200/50 aspect-video bg-zinc-100">
+          <iframe title={`Peta ${business.name}`} src="https://maps.google.com/maps?q=Jambi&t=&z=13&ie=UTF8&iwloc=&output=embed" loading="lazy" class="w-full h-full"></iframe>
+        </div>
+        <p class="mt-3 text-xs text-zinc-500">{business.address} — {business.hours}</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FINAL CTA: left-aligned asymmetric whitespace -->
+  <section class="max-w-7xl mx-auto px-4 py-14 w-full">
+    <div class="md:pl-[12vw]">
+      <h2 class="text-3xl md:text-4xl tracking-tighter leading-none font-bold max-w-[20ch]">Siap pesan tanpa antre?</h2>
+      <p class="mt-3 text-base text-gray-600 leading-relaxed max-w-[65ch]">Kirim format pesanan rapi via WhatsApp. Admin hanya perlu konfirmasi stok.</p>
+      <a href={waLink(`Halo ${business.name}, saya mau reservasi produk.`)} class="mt-6 inline-block bg-rose-700 text-white px-8 py-3.5 rounded-full font-medium transition-all duration-300 hover:-translate-y-0.5 active:scale-[0.98]">Chat WhatsApp Sekarang</a>
+    </div>
+  </section>
+</BaseLayout>
