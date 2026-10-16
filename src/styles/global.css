@@ -85,6 +85,28 @@ input, select, textarea { min-height: 48px; }
 .tap { transition: transform 0.3s var(--ease-premium), background-color 0.3s var(--ease-premium), color 0.3s var(--ease-premium), border-color 0.3s var(--ease-premium); }
 .tap:active { transform: scale(0.98); }
 
+/* ---- Awwwards touch: rotated pattern overlay on hero ---- */
+section[aria-labelledby="hero-h"] {
+  position: relative;
+  overflow: hidden;
+}
+section[aria-labelledby="hero-h"]::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: 
+    linear-gradient(45deg, rgba(183,44,37,0.05) 25%, transparent 25%),
+    linear-gradient(-45deg, rgba(183,44,37,0.05) 25%, transparent 25%),
+    linear-gradient(45deg, transparent 75%, rgba(183,44,37,0.05) 75%),
+    linear-gradient(-45deg, transparent 75%, rgba(183,44,37,0.05) 75%);
+  background-size: 20px 20px;
+  background-position: 0 0, 0 0, 10px 10px, 10px 10px;
+  opacity: 0.5;
+  transform: rotate(-5deg);
+  pointer-events: none;
+  z-index: -1;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .reveal { animation: none; }
   .marquee-track { animation: none; }
