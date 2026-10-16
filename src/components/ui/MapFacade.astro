@@ -1,0 +1,14 @@
+---
+import { business } from '../../data/business';
+interface Props { embed: string }
+const { embed } = Astro.props;
+---
+<div data-mapfacade data-src={embed} data-title={`Peta ${business.name}`} class="rounded-[2rem] overflow-hidden border border-amber-900/10 aspect-video w-full max-w-full bg-zinc-100">
+  <button data-mapbtn type="button" class="relative block w-full h-full min-h-[48px] text-left cursor-pointer" aria-label="Muat peta Google Maps {business.name}">
+    <img src={business.ogImage} alt="" aria-hidden="true" width="800" height="450" loading="lazy" decoding="async" class="absolute inset-0 w-full h-full object-cover" />
+    <span class="absolute inset-0 flex flex-col justify-end gap-2 p-6" style="background:linear-gradient(to top, rgba(0,0,0,0.65), transparent 60%)">
+      <span class="text-white text-sm leading-relaxed max-w-[60ch]">{business.address}</span>
+      <span class="inline-flex items-center justify-center self-start bg-white text-zinc-950 px-6 min-h-[48px] rounded-full text-sm font-medium">Muat Peta</span>
+    </span>
+  </button>
+</div>

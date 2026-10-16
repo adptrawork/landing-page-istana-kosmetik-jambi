@@ -1,44 +1,86 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import Kicker from '../components/ui/Kicker.astro';
+import MapFacade from '../components/ui/MapFacade.astro';
 import { business, socials, storeNotes, waLink } from '../data/business';
 const embed = `https://maps.google.com/maps?q=${encodeURIComponent(business.mapsQuery)}&t=&z=15&ie=UTF8&iwloc=&output=embed`;
-const cta = waLink(`Halo ${business.name}, saya mau tanya rute dan pricelist grosir.`);
+const cta = waLink(`Halo ${business.name}, saya mau tanya rute dan stok produk.`);
 ---
-<BaseLayout title={`Tentang — ${business.title}`} description={`Lokasi ${business.name} Kapt Bakaruddin No.17: grosir ecer, admin online, bukan Pekanbaru.`} canonicalPath="/tentang" image={business.ogImage}>
-  <section class="max-w-7xl mx-auto px-4 py-12 w-full min-h-[70dvh]">
-    <div class="md:pl-[10vw]">
-      <p class="text-sm font-bold uppercase tracking-widest text-amber-700 reveal">Tentang Grosir</p>
-      <h1 class="mt-2 text-4xl md:text-6xl tracking-tighter leading-none font-extrabold max-w-[20ch] reveal d-1">{business.name}</h1>
-      <p class="mt-3 text-base text-gray-600 leading-relaxed max-w-[65ch]">Bukan cabang Pekanbaru — ini toko Jambi di {business.address}.</p>
-    </div>
-    <div class="mt-8 grid grid-cols-1 md:grid-cols-12 gap-8">
-      <div class="md:col-span-5 reveal d-2">
-        <div class="bg-white border border-slate-200/50 rounded-[2rem] p-8 shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)]">
-          <h2 class="font-extrabold tracking-tight text-lg">Alamat & Jam</h2>
+<BaseLayout title={`Tentang — ${business.title}`} description={`Alamat, jam & kontak ${business.name}: rute Maps & WA admin.`} canonicalPath="/tentang" image={business.ogImage}>
+  <section class="max-w-7xl mx-auto px-4 w-full py-12 md:py-20" aria-labelledby="tentang-h">
+    <Kicker no="Tentang" label="{business.category} — {business.city}" />
+    <h1 id="tentang-h" class="mt-2 text-4xl md:text-6xl tracking-tighter leading-[1.05] font-extrabold text-zinc-950 max-w-[20ch]">{business.name}</h1>
+    <p class="mt-4 text-base text-gray-600 leading-relaxed max-w-[65ch]">Istana Cosmetics di Jl Kapt A Bakaruddin No.17 Jambi adalah pusat grosir dan ecer kosmetik original dengan 404 ribu pengikut Instagram. WA 0895-3219-71081 khusus admin online — semua harga estimasi dan wajib dikonfirmasi sebelum order.</p>
+    <div class="mt-8 grid grid-cols-1 md:grid-cols-12 gap-6">
+      <div class="md:col-span-5 flex flex-col gap-6">
+        <div class="bg-white border border-amber-900/10 rounded-[2.5rem] p-6 shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)]">
+          <h2 class="font-semibold text-lg tracking-tight text-zinc-950">Alamat & jam</h2>
           <p class="mt-3 text-base text-gray-600 leading-relaxed">{business.address}</p>
-          <p class="mt-1 text-xs font-bold uppercase tracking-wide text-amber-700">Alamat: {business.addressStatus}</p>
+          <p class="mt-1 font-mono text-xs tracking-widest uppercase text-amber-700">Alamat: {business.addressStatus}</p>
           <p class="mt-4 text-base text-gray-600">{business.hours}</p>
-          <p class="mt-1 text-xs font-bold uppercase tracking-wide text-amber-700">Jam: {business.hoursStatus}</p>
+          <p class="mt-1 font-mono text-xs tracking-widest uppercase text-amber-700">Jam: {business.hoursStatus}</p>
           <p class="mt-4 text-base text-gray-600">Telp/WA: {business.phoneDisplay}</p>
           <div class="mt-6 flex flex-wrap gap-3">
-            <a href={cta} class="bg-amber-700 text-white px-6 py-3 rounded-full text-sm font-medium active:scale-[0.98]">Minta Pricelist</a>
-            <a href={business.mapsUrl} class="border border-zinc-300 px-6 py-3 rounded-full text-sm font-medium active:scale-[0.98]">Cari di Maps</a>
+            <a href={cta} class="bg-amber-700 text-white inline-flex items-center justify-center px-6 min-h-[48px] rounded-full text-sm font-medium transition-all duration-300 hover:-translate-y-0.5 active:scale-[0.98]">Chat WhatsApp</a>
+            <a href={business.mapsUrl} class="inline-flex items-center justify-center border border-zinc-300 hover:border-zinc-950 text-zinc-950 px-6 min-h-[48px] rounded-full text-sm font-medium transition-all active:scale-[0.98]">Cari di Maps</a>
           </div>
         </div>
-        <div class="mt-6 bg-amber-50 border border-amber-900/15 rounded-[2rem] p-8">
-          <h2 class="font-extrabold tracking-tight text-lg">Akun Resmi</h2>
-          <ul class="mt-3 flex flex-col gap-2 text-sm">{socials.map((s) => (<li><a href={s.url} class="underline underline-offset-4">{s.label}</a> <span class="text-zinc-500">— {s.note}</span></li>))}</ul>
+        <div class="bg-white border border-amber-900/10 rounded-[2.5rem] p-6 shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)]">
+          <h2 class="font-semibold text-lg tracking-tight text-zinc-950">Tanya stok cepat</h2>
+          <p class="mt-1 text-sm text-gray-600">Isi form — chat WhatsApp terisi otomatis.</p>
+          <form id="wa-form" class="mt-4 flex flex-col gap-3" novalidate>
+            <div id="f-nama-wrap">
+              <label for="f-nama" class="text-sm font-medium text-zinc-950">Nama</label>
+              <input id="f-nama" name="nama" type="text" autocomplete="name" placeholder="Nama kamu" class="mt-1 w-full rounded-2xl px-4 bg-white border border-zinc-300 text-zinc-950" />
+              <p class="field-err mt-1 text-sm text-red-500">Nama wajib diisi (min. 2 huruf).</p>
+            </div>
+            <div id="f-pesan-wrap">
+              <label for="f-pesan" class="text-sm font-medium text-zinc-950">Kebutuhan</label>
+              <textarea id="f-pesan" name="pesan" rows="3" placeholder="Contoh: stok sunscreen + harga grosir" class="mt-1 w-full rounded-2xl px-4 py-3 bg-white border border-zinc-300 text-zinc-950"></textarea>
+              <p class="field-err mt-1 text-sm text-red-500">Tulis kebutuhanmu dulu (min. 5 karakter).</p>
+            </div>
+            <button type="submit" class="bg-amber-700 text-white inline-flex items-center justify-center px-6 min-h-[48px] rounded-full text-sm font-medium active:scale-[0.98]">Kirim via WhatsApp</button>
+          </form>
+        </div>
+        <div class="bg-white border border-amber-900/10 rounded-[2.5rem] p-6 shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)]">
+          <h2 class="font-semibold text-lg tracking-tight text-zinc-950">Akun resmi</h2>
+          <ul class="mt-3 flex flex-col gap-2 text-sm text-gray-600">
+            {socials.map((x) => (<li><a href={x.url} class="underline underline-offset-4 text-zinc-950 min-h-[48px] inline-flex items-center">{x.label}</a> <span class="text-zinc-400">— {x.note}</span></li>))}
+          </ul>
         </div>
       </div>
-      <div class="md:col-span-7 reveal d-3">
-        <div class="-mt-2 rounded-[2rem] overflow-hidden border border-slate-200/50 aspect-video bg-zinc-100">
-          <iframe title={`Peta ${business.name}`} src={embed} loading="lazy" class="w-full h-full"></iframe>
-        </div>
-        <div class="mt-6 bg-white border border-slate-200/50 rounded-[2rem] p-8">
-          <h2 class="font-extrabold tracking-tight text-lg">Catatan Toko</h2>
-          <ul class="mt-3 text-base text-gray-600 leading-relaxed list-disc pl-5">{storeNotes.map((n) => (<li>{n}</li>))}</ul>
+      <div class="md:col-span-7">
+        <MapFacade embed={embed} />
+        <p class="mt-3 text-xs text-zinc-400">{business.address} — {business.hours}</p>
+        <div class="mt-6 bg-white border border-amber-900/10 rounded-[2.5rem] p-6 shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)]">
+          <h2 class="font-semibold text-lg tracking-tight text-zinc-950">Catatan toko</h2>
+          <ul class="mt-3 text-base text-gray-600 leading-relaxed list-disc pl-5">
+            {storeNotes.map((n) => (<li>{n}</li>))}
+          </ul>
+          <p class="mt-4 text-sm text-zinc-400">Harga dapat berubah, konfirmasi via WA toko.</p>
         </div>
       </div>
     </div>
   </section>
+  <script define:vars={{ storePhone: business.phone, storeName: business.name }}>
+    document.addEventListener('DOMContentLoaded', () => {
+      const form = document.getElementById('wa-form');
+      const nama = document.getElementById('f-nama');
+      const pesan = document.getElementById('f-pesan');
+      const wNama = document.getElementById('f-nama-wrap');
+      const wPesan = document.getElementById('f-pesan-wrap');
+      if (form) form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const n = (nama.value || '').trim();
+        const p = (pesan.value || '').trim();
+        const okN = n.length >= 2;
+        const okP = p.length >= 5;
+        if (wNama) wNama.classList.toggle('field-invalid', !okN);
+        if (wPesan) wPesan.classList.toggle('field-invalid', !okP);
+        if (!okN || !okP) { (!okN ? nama : pesan).focus(); return; }
+        const text = encodeURIComponent(`Halo ${storeName}, saya ${n}. ${p}`);
+        window.open(`https://wa.me/${storePhone}?text=${text}`, '_blank', 'noopener');
+      });
+    });
+  </script>
 </BaseLayout>

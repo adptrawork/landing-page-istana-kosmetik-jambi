@@ -1,0 +1,10 @@
+---
+import Kicker from './Kicker.astro';
+interface Props { no: string; kicker: string; title: string; desc?: string; }
+const { no, kicker, title, desc } = Astro.props;
+---
+<div class="max-w-[70ch]">
+  <Kicker no={no} label={kicker} />
+  <h2 class="mt-2 text-3xl md:text-4xl tracking-tighter leading-tight font-extrabold text-zinc-950">{title}</h2>
+  {desc && <p class="mt-3 text-base text-gray-600 leading-relaxed max-w-[65ch]">{desc}</p>}
+</div>

@@ -1,61 +1,166 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import Kicker from '../components/ui/Kicker.astro';
+import SectionHead from '../components/ui/SectionHead.astro';
+import TrustStrip from '../components/ui/TrustStrip.astro';
+import Steps from '../components/ui/Steps.astro';
+import Faq from '../components/ui/Faq.astro';
+import Marquee from '../components/ui/Marquee.astro';
+import MapFacade from '../components/ui/MapFacade.astro';
+import ProductCard from '../components/ui/ProductCard.astro';
 import { business, products, waLink } from '../data/business';
-const heroCta = waLink(`Halo ${business.name}, saya mau minta pricelist grosir.`);
+const heroCta = waLink(`Halo ${business.name}, apakah stok produk best seller ready?`);
+const katalogCta = "/katalog";
 const featured = products.slice(0, 4);
+const embed = `https://maps.google.com/maps?q=${encodeURIComponent(business.mapsQuery)}&t=&z=15&ie=UTF8&iwloc=&output=embed`;
+const trust = [
+  { v: `${business.rating}/5.0`, l: `${business.reviewCount}+ ulasan Maps` },
+  { v: "BPOM", l: "Original 100%" },
+  { v: "WA", l: "Fast-respon admin" },
+  { v: "Grosir & ecer • Buka tiap hari", l: business.hours },
+];
+const marquee = ['FACETOLOGY', 'GLAD2GLOW', 'IMPLORA', 'WARDAH', 'HARGA GROSIR', 'BPOM ORIGINAL'];
+const steps = [
+  { t: "Pilih produk", d: "Jelajahi best seller atau buka katalog lengkap, catat nama dan estimasi harga." },
+  { t: "Chat via WhatsApp", d: "Kirim format pesanan rapi — admin konfirmasi stok dan harga final." },
+  { t: "Ambil / kirim", d: "Ambil langsung di toko atau atur pengiriman ojek online." },
+];
+const faqs = [
+  { q: "Apakah produk di Istana original?", a: "Ya, produk original. Label Terverifikasi berarti data dicek dari sumber resmi brand; Estimasi berarti perkiraan — tanya sertifikasi BPOM tiap item via WA." },
+  { q: "Bagaimana cara pesan?", a: "Pilih produk di katalog, klik Pesan via WA, lalu kirim format pesanan. Admin mengonfirmasi stok dan harga final sebelum Anda datang." },
+  { q: "Apakah harga di web ini pasti?", a: "Belum — semua harga estimasi dan dapat berubah. Harga final selalu dikonfirmasi admin via WhatsApp." },
+  { q: "Jam buka dan alamatnya?", a: `{business.hours}. {business.address}.` },
+];
 ---
+<!-- Ref: Awwwards Beauty nominees (Beauty Queen flagship, Soleil Noir Essentiality, Bridge Beauty SOTD): hero editorial besar + storytelling bahan + section ritual. | Dribbble Orvelia beauty shop + Musemind e-commerce: kategori masalah kulit, best-seller rail, badge BPOM, tutorial/guide. | Lapa Ninja beauty elements: hero CTA, value prop, features, visual, social proof, benefits, trust (BPOM/reseller), CTA berulang, kontak. -->
 <BaseLayout title={business.title} description={business.description} canonicalPath="/" image={business.ogImage}>
-  <!-- hero whitespace besar + visual overlap -->
-  <section class="max-w-7xl mx-auto px-4 w-full pt-16 md:pt-28">
-    <div class="md:pl-[16vw] reveal">
-      <p class="flex items-center gap-2 text-sm font-bold uppercase tracking-widest text-amber-700">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 8l8-4 8 4v8l-8 4-8-4z"/><path d="M4 8l8 4 8-4M12 12v8"/></svg>
-        <span>{business.rating} • Grosir & Ecer • {business.city}</span>
-      </p>
-      <h1 class="mt-4 text-4xl md:text-6xl tracking-tighter leading-none font-extrabold">Istana Cosmetics Jambi — Grosir & Ecer Terlengkap</h1>
-      <p class="mt-5 text-base text-gray-600 leading-relaxed max-w-[65ch]">Jl Kapt A Bakaruddin No.17. Satu atap untuk kulakan lusinan dan belanja satuan — minta pricelist grosir ke admin online, harga ecer estimasi.</p>
-      <div class="mt-8 flex flex-wrap gap-3">
-        <a href={heroCta} class="bg-amber-700 text-white px-7 py-3.5 rounded-full font-medium transition-all duration-300 hover:-translate-y-0.5 active:scale-[0.98]" style="transition-timing-function:cubic-bezier(0.16,1,0.3,1)">Minta Pricelist Grosir</a>
-        <a href="/katalog" class="border border-zinc-300 px-7 py-3.5 rounded-full font-medium transition-all duration-300 hover:border-zinc-950 active:scale-[0.98]">Lihat Katalog</a>
-      </div>
-    </div>
-    <div class="-mt-8 md:-mt-12 relative z-10 reveal d-2">
-      <div class="rounded-[2.5rem] overflow-hidden border border-slate-200/50 shadow-[0_20px_40px_-15px_rgba(0,0,0,0.1)] bg-zinc-100 aspect-[16/7]">
-        <img src="/images/istana-hero.jpg" alt="Etalase Istana Cosmetics Jambi — foto resmi toko" width="1200" height="525" loading="eager" class="w-full h-full object-cover" />
-      </div>
-      <div class="mt-3 grid grid-cols-1 md:grid-cols-12 gap-4 text-sm">
-        <div class="md:col-span-7 bg-white border border-slate-200/50 rounded-3xl p-5 shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)]"><p class="font-bold">Skema Grosir</p><p class="mt-1 text-base text-gray-600">Lusinan & kartonan • pricelist via admin online 0895-3219-71081</p></div>
-        <div class="md:col-span-5 bg-white border border-slate-200/50 rounded-3xl p-5 shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)]"><p class="font-bold">Skema Ecer</p><p class="mt-1 text-base text-gray-600">Satuan • {business.hours}</p></div>
-      </div>
-    </div>
-  </section>
-
-  <!-- accordion image slider -->
-  <section class="max-w-7xl mx-auto px-4 py-14 w-full min-h-[70dvh]">
-    <p class="text-sm font-bold uppercase tracking-widest text-amber-700 reveal">Sorotan Katalog</p>
-    <h2 class="mt-2 text-3xl md:text-4xl tracking-tighter leading-none font-extrabold reveal d-1">Geser — sorot tiap produk</h2>
-    <p class="mt-3 text-base text-gray-600 leading-relaxed max-w-[65ch]">Arahkan kursor / ketuk strip gambar untuk memperbesar. <a class="underline underline-offset-4 text-zinc-900" href="/katalog">Lihat semua {products.length} produk</a></p>
-    <div class="acc-strip mt-8 h-[46dvh] md:h-[60dvh]" role="list" aria-label="Slider produk unggulan">
-      {featured.map((p, i) => (
-        <div class="acc-panel relative bg-zinc-100 border border-slate-200/50 reveal" role="listitem" tabindex="0" style={`animation-delay:${0.08 + i * 0.07}s`}>
-          <img src={p.image} alt={p.alt} width={p.w} height={p.h} loading="lazy" class="absolute inset-0 w-full h-full object-cover" />
-          <span class:list={["absolute top-3 left-3 text-[11px] font-bold px-3 py-1.5 rounded-full", p.badge === 'Teruji' ? "bg-amber-700 text-white" : "bg-white/90 text-zinc-900"]}>{p.badge === 'Teruji' ? 'Grosir ready' : 'Ecer'}</span>
-          <div class="acc-label absolute bottom-0 inset-x-0 p-4 bg-gradient-to-t from-zinc-950/80 to-transparent text-white">
-            <p class="font-bold tracking-tight">{p.name}</p>
-            <p class="text-sm text-zinc-300">{p.price}</p>
-            <a href={waLink(`Halo ${business.name}, saya mau pesan ${p.name} (${p.price}). Grosir/ecer ready?`)} class="mt-2 inline-block bg-white text-zinc-950 px-5 py-2 rounded-full text-sm font-medium active:scale-[0.98]">Pesan via WA</a>
-          </div>
+  <!-- 01 Hero -->
+  <section class="max-w-7xl mx-auto px-4 w-full py-12 md:py-20" aria-labelledby="hero-h">
+    <div class="grid grid-cols-1 md:grid-cols-12 gap-6 md:gap-8 items-center">
+      <div class="md:col-span-7">
+        <p class="flex flex-wrap items-center gap-2 text-sm font-medium text-amber-700">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M12 3l2.7 5.6 6.1.8-4.5 4.2 1.1 6-5.4-3-5.4 3 1.1-6L3.2 9.4l6.1-.8z"/></svg>
+          <span class="font-mono">{business.rating} • {business.reviewCount}+ ulasan</span>
+          <span class="text-zinc-400">• {business.category} • {business.city}</span>
+        </p>
+        <h1 id="hero-h" class="mt-4 text-4xl md:text-6xl tracking-tighter leading-[1.05] font-extrabold text-zinc-950">Istana Cosmetics Jambi — Grosir & Ecer Terlengkap</h1>
+        <p class="mt-5 text-base text-gray-600 leading-relaxed max-w-[65ch]">Jl Kapt A Bakaruddin No.17 (bukan cabang Pekanbaru). Pusat grosir & ecer kosmetik original, 404 ribu pengikut — minta pricelist lusinan via admin online.</p>
+        <div class="mt-8 flex flex-wrap gap-3">
+          <a href={heroCta} class="bg-amber-700 text-white inline-flex items-center justify-center px-7 min-h-[48px] rounded-full font-medium transition-all duration-300 hover:-translate-y-0.5 active:scale-[0.98]" style="transition-timing-function:cubic-bezier(0.16,1,0.3,1)">Pesan via WhatsApp</a>
+          <a href={katalogCta} class="inline-flex items-center justify-center border border-zinc-300 hover:border-zinc-950 text-zinc-950 px-7 min-h-[48px] rounded-full font-medium transition-all duration-300 active:scale-[0.98]">Lihat Katalog</a>
         </div>
-      ))}
+        <p class="mt-6 font-mono text-xs tracking-widest uppercase text-zinc-400">BPOM Original • WA fast-respon • {business.addressStatus}</p>
+      </div>
+      <div class="md:col-span-5">
+        <div class="bg-white border border-amber-900/10 rounded-[2.5rem] p-6 shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)]">
+          <div class="rounded-3xl overflow-hidden bg-zinc-100 aspect-[4/3] max-w-full">
+            <img src={business.ogImage} alt="{business.name} — etalase toko" width="800" height="600" loading="eager" fetchpriority="high" decoding="async" class="w-full h-full object-cover" />
+          </div>
+          <p class="mt-3 text-xs text-zinc-400">Foto: instagram @istana.cosmetics — ganti foto etalase asli bila tersedia</p>
+          <p class="mt-4 text-lg font-semibold tracking-tight text-zinc-950">Katalog online — tanpa antre</p>
+          <p class="mt-2 text-base text-gray-600 leading-relaxed">Pricelist grosir lusinan, konfirmasi stok online sebelum datang, tombol pesan per produk ke admin online.</p>
+        </div>
+      </div>
     </div>
-    <p class="mt-4 text-xs text-zinc-400">Badge: Grosir ready = stok kulakan tersedia • Ecer = satuan. Harga estimasi, konfirmasi via WA.</p>
   </section>
 
-  <section class="max-w-7xl mx-auto px-4 py-14 w-full">
-    <div class="md:pl-[16vw] reveal">
-      <h2 class="text-3xl md:text-4xl tracking-tighter leading-none font-extrabold max-w-[20ch]">Kulakan hari ini, ready besok?</h2>
-      <p class="mt-3 text-base text-gray-600 leading-relaxed max-w-[65ch]">Chat admin online sebelum datang. Jelajahi <a class="underline underline-offset-4 text-zinc-900" href="/katalog">katalog</a>, <a class="underline underline-offset-4 text-zinc-900" href="/promo">promo</a>, <a class="underline underline-offset-4 text-zinc-900" href="/tentang">info toko</a>.</p>
-      <a href={heroCta} class="mt-6 inline-block bg-amber-700 text-white px-8 py-3.5 rounded-full font-medium transition-all duration-300 hover:-translate-y-0.5 active:scale-[0.98]">Chat Admin Online</a>
+  <Marquee items={marquee} />
+
+  <!-- 02 Trust strip -->
+  <section class="max-w-7xl mx-auto px-4 w-full py-12 md:py-20" aria-label="Kepercayaan toko">
+    <TrustStrip items={trust} />
+  </section>
+
+  <!-- 03 Belanja berdasar masalah kulit -->
+  <section class="max-w-7xl mx-auto px-4 w-full py-12 md:py-20" aria-labelledby="s-masalah">
+    <div id="s-masalah"><SectionHead no="03" kicker="Belanja berdasar masalah" title="Mulai dari kebutuhan kulitmu" desc="Empat jalur cepat ke katalog — tiap produk berlabel Terverifikasi, Estimasi, atau Info menyusul." /></div>
+    <div class="mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      <a href="/katalog" class="bg-white border border-amber-900/10 rounded-[2.5rem] p-6 shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] block transition-all duration-300 hover:-translate-y-1">
+        <p class="font-mono text-xs tracking-[0.2em] text-amber-700">01</p>
+        <p class="mt-3 font-semibold text-lg tracking-tight text-zinc-950">Brightening</p>
+        <p class="mt-1 text-base text-gray-600 leading-relaxed">Serum, moisturizer & toner untuk kulit kusam dan noda.</p>
+        <p class="mt-3 text-sm font-medium underline underline-offset-4 text-zinc-950">Lihat di katalog</p>
+      </a>
+      <a href="/katalog" class="bg-white border border-amber-900/10 rounded-[2.5rem] p-6 shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] block transition-all duration-300 hover:-translate-y-1">
+        <p class="font-mono text-xs tracking-[0.2em] text-amber-700">02</p>
+        <p class="mt-3 font-semibold text-lg tracking-tight text-zinc-950">Acne & Calming</p>
+        <p class="mt-1 text-base text-gray-600 leading-relaxed">Clay mask, serum & toner untuk jerawat dan kemerahan.</p>
+        <p class="mt-3 text-sm font-medium underline underline-offset-4 text-zinc-950">Lihat di katalog</p>
+      </a>
+      <a href="/katalog" class="bg-white border border-amber-900/10 rounded-[2.5rem] p-6 shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] block transition-all duration-300 hover:-translate-y-1">
+        <p class="font-mono text-xs tracking-[0.2em] text-amber-700">03</p>
+        <p class="mt-3 font-semibold text-lg tracking-tight text-zinc-950">Sunscreen & Daily</p>
+        <p class="mt-1 text-base text-gray-600 leading-relaxed">Tabir surya dan perawatan harian ringan.</p>
+        <p class="mt-3 text-sm font-medium underline underline-offset-4 text-zinc-950">Lihat di katalog</p>
+      </a>
+      <a href="/katalog" class="bg-white border border-amber-900/10 rounded-[2.5rem] p-6 shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] block transition-all duration-300 hover:-translate-y-1">
+        <p class="font-mono text-xs tracking-[0.2em] text-amber-700">04</p>
+        <p class="mt-3 font-semibold text-lg tracking-tight text-zinc-950">Lip & Makeup</p>
+        <p class="mt-1 text-base text-gray-600 leading-relaxed">Lip cream, bedak, dan riasan harian.</p>
+        <p class="mt-3 text-sm font-medium underline underline-offset-4 text-zinc-950">Lihat di katalog</p>
+      </a>
+    </div>
+  </section>
+
+  <!-- 04 Best seller -->
+  <section class="max-w-7xl mx-auto px-4 w-full py-12 md:py-20" aria-labelledby="s-best">
+    <div id="s-best"><SectionHead no="04" kicker="Best seller" title="Produk paling dicari" desc={`Harga estimasi, konfirmasi via WA. Lihat semua ${products.length} produk di katalog.`} /></div>
+    <div class="mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      {featured.map((p) => (<ProductCard p={p} />))}
+    </div>
+    <a href="/katalog" class="mt-8 inline-flex items-center justify-center border border-zinc-300 hover:border-zinc-950 text-zinc-950 px-7 min-h-[48px] rounded-full font-medium">Lihat semua {products.length} produk</a>
+  </section>
+
+  <!-- 05 Cara pesan -->
+  <section class="max-w-7xl mx-auto px-4 w-full py-12 md:py-20" aria-labelledby="s-cara">
+    <div id="s-cara"><SectionHead no="05" kicker="Cara pesan" title="Pesan dalam 3 langkah" desc="Tanpa antre, tanpa ribet — semua order dikonfirmasi admin via WhatsApp." /></div>
+    <Steps steps={steps} />
+  </section>
+
+  <!-- 06 Testimoni + Maps -->
+  <section class="max-w-7xl mx-auto px-4 w-full py-12 md:py-20" aria-labelledby="s-testimoni">
+    <div id="s-testimoni"><SectionHead no="06" kicker="Testimoni & lokasi" title="Kata pembeli, titik lokasinya" desc={`{business.address} — {business.hours}.`} /></div>
+    <div class="mt-8 grid grid-cols-1 md:grid-cols-12 gap-6">
+      <div class="md:col-span-5 flex flex-col gap-6">
+        <div class="bg-white border border-amber-900/10 rounded-[2.5rem] p-6 shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)]">
+          <p class="font-mono text-4xl font-semibold text-zinc-950">{business.rating}<span class="text-lg text-zinc-400">/5.0</span></p>
+          <p class="mt-1 text-sm text-gray-600">dari {business.reviewCount}+ ulasan Google Maps</p>
+          <p class="mt-3 text-xs text-zinc-400">Ringkasan tema ulasan; nama disingkat.</p>
+        </div>
+        <figure class="bg-white border border-amber-900/10 rounded-[2.5rem] p-6 shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)]">
+          <blockquote class="text-base text-gray-600 leading-relaxed">“Stok yang dicari ready, admin fast-respon di WA. Datang tinggal ambil.”</blockquote>
+          <figcaption class="mt-3 font-mono text-xs tracking-widest uppercase text-zinc-400">R*****a — pembeli</figcaption>
+        </figure>
+        <figure class="bg-white border border-amber-900/10 rounded-[2.5rem] p-6 shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)]">
+          <blockquote class="text-base text-gray-600 leading-relaxed">“Kulakan lusinan dapat pricelist grosir. Admin online fast-respon.”</blockquote>
+          <figcaption class="mt-3 font-mono text-xs tracking-widest uppercase text-zinc-400">H*****h, reseller</figcaption>
+        </figure>
+      </div>
+      <div class="md:col-span-7">
+        <MapFacade embed={embed} />
+        <p class="mt-3 text-xs text-zinc-400">{business.address} — {business.hours}</p>
+        <div class="mt-6 flex flex-wrap gap-3">
+          <a href={business.mapsUrl} class="inline-flex items-center justify-center border border-zinc-300 hover:border-zinc-950 text-zinc-950 px-6 min-h-[48px] rounded-full text-sm font-medium">Buka di Google Maps</a>
+          <a href={heroCta} class="bg-amber-700 text-white inline-flex items-center justify-center px-6 min-h-[48px] rounded-full text-sm font-medium">Tanya stok via WA</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 07 FAQ -->
+  <section class="max-w-7xl mx-auto px-4 w-full py-12 md:py-20" aria-labelledby="s-faq">
+    <div id="s-faq"><SectionHead no="07" kicker="FAQ" title="Sering ditanyakan" desc="Jawaban singkat sebelum chat admin." /></div>
+    <Faq items={faqs} />
+  </section>
+
+  <!-- 08 Final CTA -->
+  <section class="max-w-7xl mx-auto px-4 w-full py-12 md:py-20" aria-labelledby="s-cta">
+    <Kicker no="08" label="Siap order" />
+    <h2 id="s-cta" class="mt-2 text-3xl md:text-4xl tracking-tighter leading-tight font-extrabold text-zinc-950 max-w-[20ch]">Siap pesan tanpa antre?</h2>
+    <p class="mt-3 text-base text-gray-600 leading-relaxed max-w-[65ch]">Kirim format pesanan rapi via WhatsApp ({business.phoneDisplay}). Jelajahi <a class="underline underline-offset-4 text-zinc-950" href="/katalog">katalog</a>, <a class="underline underline-offset-4 text-zinc-950" href="/promo">promo</a>, dan <a class="underline underline-offset-4 text-zinc-950" href="/tentang">info toko</a>.</p>
+    <div class="mt-6 flex flex-wrap gap-3">
+      <a href={heroCta} class="bg-amber-700 text-white inline-flex items-center justify-center px-8 min-h-[48px] rounded-full font-medium transition-all duration-300 hover:-translate-y-0.5 active:scale-[0.98]">Chat WhatsApp Sekarang</a>
+      <a href="/katalog" class="inline-flex items-center justify-center border border-zinc-300 hover:border-zinc-950 text-zinc-950 px-8 min-h-[48px] rounded-full font-medium">Lihat Katalog</a>
     </div>
   </section>
 </BaseLayout>

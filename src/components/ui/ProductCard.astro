@@ -1,0 +1,25 @@
+---
+import { business, waLink } from '../../data/business';
+interface P { name: string; price: string; badge: string; stock: string; image: string; alt: string; w: number; h: number; source: string; }
+interface Props { p: P; titleTag?: string }
+const { p, titleTag = "h3" } = Astro.props;
+const Tag = titleTag as any;
+const msg = waLink(`Halo ${business.name}, saya mau pesan ${p.name} (${p.price}). Apakah ready?`);
+const isRemote = p.image.startsWith('http');
+const src400 = isRemote ? p.image.replace('/800/600', '/400/300') : p.image;
+const srcset = isRemote ? `${src400} 400w, ${p.image} 800w` : undefined;
+---
+<article class="card-clamp">
+  <div class="bg-white border border-amber-900/10 rounded-[2.5rem] p-6 shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] transition-all duration-300 hover:-translate-y-1 h-full">
+    <div class="rounded-3xl overflow-hidden bg-zinc-100 aspect-[4/3] max-w-full">
+      <img src={p.image} srcset={srcset} sizes={isRemote ? "(max-width:768px) 100vw, 800px" : undefined} alt={p.alt} width={p.w} height={p.h} loading="lazy" decoding="async" class="w-full h-full object-cover" />
+    </div>
+    <p class="mt-4 font-mono text-xs tracking-widest uppercase text-amber-700">{p.badge} • {p.stock}</p>
+    <Tag class="mt-1 font-semibold text-lg tracking-tight text-zinc-950">{p.name}</Tag>
+    <p class="mt-1 text-xs text-zinc-400">{p.source}</p>
+    <div class="mt-4 flex items-center justify-between gap-2 flex-wrap">
+      <p class="font-mono font-semibold text-sm text-zinc-950">{p.price}</p>
+      <a href={msg} class="bg-zinc-950 text-white inline-flex items-center justify-center px-5 min-h-[48px] rounded-full text-sm font-medium transition-all duration-300 hover:-translate-y-0.5 active:scale-[0.98]">Pesan via WA</a>
+    </div>
+  </div>
+</article>
