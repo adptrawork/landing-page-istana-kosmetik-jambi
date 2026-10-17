@@ -85,30 +85,90 @@ input, select, textarea { min-height: 48px; }
 .tap { transition: transform 0.3s var(--ease-premium), background-color 0.3s var(--ease-premium), color 0.3s var(--ease-premium), border-color 0.3s var(--ease-premium); }
 .tap:active { transform: scale(0.98); }
 
-/* ---- Awwwards touch: rotated pattern overlay on hero ---- */
-section[aria-labelledby="hero-h"] {
+/* ---- Awwwards: hero "editorial shelf / grosir counter" ----
+   Motif: garis rambut buku kas di belakang, rak bertumpuk, tag harga miring.
+   Semua gerak hanya transform/opacity. */
+.hero-shelf {
   position: relative;
-  overflow: hidden;
+  overflow: clip;
 }
-section[aria-labelledby="hero-h"]::before {
+.hero-shelf::before {
   content: "";
   position: absolute;
   inset: 0;
-  background-image: 
-    linear-gradient(45deg, rgba(183,44,37,0.05) 25%, transparent 25%),
-    linear-gradient(-45deg, rgba(183,44,37,0.05) 25%, transparent 25%),
-    linear-gradient(45deg, transparent 75%, rgba(183,44,37,0.05) 75%),
-    linear-gradient(-45deg, transparent 75%, rgba(183,44,37,0.05) 75%);
-  background-size: 20px 20px;
-  background-position: 0 0, 0 0, 10px 10px, 10px 10px;
-  opacity: 0.5;
-  transform: rotate(-5deg);
+  background-image: repeating-linear-gradient(
+    to bottom,
+    rgba(35, 31, 28, 0.05) 0 1px,
+    rgba(35, 31, 28, 0) 1px 32px
+  );
   pointer-events: none;
+  z-index: 0;
+}
+.hero-shelf > * { position: relative; z-index: 1; }
+
+/* rak: produk "turun" ke papan rak, stagger per slot */
+.shelf-item { animation: shelve 0.8s var(--ease-premium) both; animation-delay: calc(var(--i, 0) * 60ms + 140ms); }
+@keyframes shelve {
+  from { opacity: 0; transform: translateY(18px) scale(0.97); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* tag harga: hangtag konter, sudut dipangkas + lubang + bayangan offset risograph */
+.price-tag-mount {
+  --tag-shape: polygon(0.95rem 0, 100% 0, 100% 100%, 0 100%, 0 0.95rem);
+  position: relative;
+  z-index: 3;
+  transform: rotate(-6deg);
+  animation: tagswing 8s ease-in-out infinite alternate;
+}
+@keyframes tagswing {
+  from { transform: rotate(-7.5deg) translate3d(0, 0, 0); }
+  to { transform: rotate(-4deg) translate3d(0, -4px, 0); }
+}
+.price-tag-mount:hover { animation-play-state: paused; }
+.price-tag-shadow {
+  position: absolute;
+  inset: 0;
+  background: var(--ink);
+  clip-path: var(--tag-shape);
+  transform: translate(6px, 6px);
   z-index: -1;
+}
+.price-tag {
+  position: relative;
+  display: block;
+  background: var(--accent);
+  color: var(--paper);
+  clip-path: var(--tag-shape);
+  overflow: hidden;
+}
+.price-tag::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: repeating-linear-gradient(
+    118deg,
+    rgba(248, 240, 231, 0.16) 0 2px,
+    rgba(248, 240, 231, 0) 2px 8px
+  );
+  pointer-events: none;
+}
+.price-tag:hover { background: var(--ink); }
+.price-tag-hole {
+  position: absolute;
+  left: 1.05rem;
+  top: 0.7rem;
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 9999px;
+  background: var(--paper);
+  opacity: 0.55;
 }
 
 @media (prefers-reduced-motion: reduce) {
   .reveal { animation: none; }
+  .shelf-item { animation: none; }
+  .price-tag-mount { animation: none; }
   .marquee-track { animation: none; }
   .nav-panel { transition: none; }
   details.faq summary .plus { transition: none; }
